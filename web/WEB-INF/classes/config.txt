@@ -1,0 +1,4 @@
+main-IP=localhost
+backup-IP=localhost
+main-port=8000
+backup-port=9000

@@ -8,6 +8,7 @@ import Data.Election;
 import Data.User;
 import rmiserver.RMIServerInterface;
 
+import java.io.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,12 +18,45 @@ public class IVotasBean {
 	private RMIServerInterface server;
 	private String username; // username and password supplied by the user
 	private String password;
+  private static final String FILENAME = "~/ivotas/src/config.txt";
+  private int mainPort;
+  private int backupPort;
+  private String mainIP;
+  private String backupIP;
 
-	public IVotasBean() {
-		try {
-      server = (RMIServerInterface) LocateRegistry.getRegistry("localhost", 9000).lookup("ivotas");
-		}
-		catch(NotBoundException|RemoteException e) {
+
+  public IVotasBean() {
+
+      try {
+        BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("/config.txt")));
+        String sCurrentLine;
+
+        String line;
+        while ((line = br.readLine()) != null) {
+          String[] info = line.split("=");
+          switch (info[0]) {
+            case "main-IP":
+              mainIP = info[1];
+              break;
+            case "backup-IP":
+              backupIP = info[1];
+              break;
+            case "main-port":
+              mainPort = Integer.parseInt(info[1]);
+              break;
+            case "backup-port":
+              backupPort = Integer.parseInt(info[1]);
+              break;
+          }
+        }
+
+      } catch (IOException e) {
+        System.out.println("Falhou");
+      }
+
+    try {
+      server = (RMIServerInterface) LocateRegistry.getRegistry(mainIP, mainPort).lookup("ivotas");
+		} catch(NotBoundException|RemoteException e) {
       System.out.println("Error connecting to rmi");
     }
 	}
