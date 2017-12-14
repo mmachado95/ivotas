@@ -3,6 +3,7 @@
  */
 package rmiserver;
 
+import Admin.AdminInterface;
 import Data.*;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	private ArrayList<CandidateList> candidateLists;
 	private ArrayList<VotingTable> votingTables;
 	private ArrayList<Vote> votes;
+  private ArrayList<AdminInterface> admins;
 
   public RMIServer() throws RemoteException {
 		super();
@@ -43,6 +45,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 			candidateLists = data.candidateLists;
 			votingTables = data.votingTables;
 			votes = data.votes;
+			admins = new ArrayList<>();
     } catch (ClassNotFoundException e) {
 			System.out.println("Class Not Found Exception " + e);
 		} catch (java.io.IOException e) {
@@ -624,6 +627,23 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     return date;
+  }
+
+  public synchronized void subscribe(AdminInterface c) throws RemoteException {
+    System.out.println("Subscribing new admin");
+    this.admins.add(c);
+  }
+
+  public synchronized void unsubscribe(AdminInterface c) throws RemoteException {
+    System.out.println("Unsubscribed admin");
+    this.admins.remove(c);
+  }
+
+  public synchronized void notifyAdmins(String s) throws RemoteException {
+    for (int i = 0; i < this.admins.size(); i++) {
+      System.out.println("Sending print to admin.");
+      this.admins.get(i).print_on_client(s);
+    }
   }
 
   private synchronized void updateFile(Object object, String className) {

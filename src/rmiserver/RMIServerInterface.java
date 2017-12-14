@@ -3,6 +3,7 @@
  */
 package rmiserver;
 
+import Admin.AdminInterface;
 import Data.*;
 
 import java.rmi.Remote;
@@ -127,6 +128,12 @@ public interface RMIServerInterface extends Remote {
 
   /** Return true if vote is valid and false otherwise. */
   boolean voteIsValid(User user, VotingTable votingTable, CandidateList candidateList) throws RemoteException;
+
+ void subscribe(AdminInterface c) throws RemoteException;
+
+  void unsubscribe(AdminInterface c) throws RemoteException;
+
+  void notifyAdmins(String s) throws RemoteException;
 
   /** Test */
   void test() throws RemoteException;
