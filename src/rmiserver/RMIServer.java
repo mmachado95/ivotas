@@ -553,6 +553,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
   }
 
   public synchronized void vote(User user, Election election, CandidateList candidateList) throws RemoteException {
+    System.out.println(this.votes);
     Vote vote;
 
     if (candidateList == null) {
@@ -561,14 +562,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
       vote = new Vote(user, election, candidateList);
     }
 
-    System.out.println("got here");
-    System.out.println(user);
-    System.out.println(election);
-    System.out.println(candidateList);
-    System.out.println(vote);
-
     this.votes.add(vote);
     updateFile(this.votes, "Votes");
+    System.out.println(this.votes);
 
     int numberOfVotes = 0;
     for (int i = 0; i < this.votes.size(); i++) {
