@@ -19,7 +19,7 @@
 		</c:otherwise>
 	</c:choose>
 
-	<c:forEach items="${IVotasBean.allElections}" var="value">
+	<c:forEach items="${session.iVotasBean.getAllElections()}" var="value">
         <s:url action="election" var="electionTag">
             <s:param name="electionName"> <c:out value="${value}" /> </s:param>
         </s:url>

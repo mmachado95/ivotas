@@ -13,84 +13,167 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class IVotasBean {
-	private RMIServerInterface server;
-	private String username; // username and password supplied by the user
-	private String password;
+	private RMIServerInterface rmiServer;
+	private String username = null; // username and password supplied by the user
+	private String password = null;
   private static final String FILENAME = "~/ivotas/src/config.txt";
-  private int mainPort;
-  private int backupPort;
-  private String mainIP;
-  private String backupIP;
-
+  private String ip;
+  private int port;
 
   public IVotasBean() {
 
       try {
         BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("/config.txt")));
         String sCurrentLine;
-
         String line;
+
         while ((line = br.readLine()) != null) {
           String[] info = line.split("=");
           switch (info[0]) {
             case "main-IP":
-              mainIP = info[1];
-              break;
-            case "backup-IP":
-              backupIP = info[1];
+              this.ip = info[1];
               break;
             case "main-port":
-              mainPort = Integer.parseInt(info[1]);
-              break;
-            case "backup-port":
-              backupPort = Integer.parseInt(info[1]);
+              this.port = Integer.parseInt(info[1]);
               break;
           }
         }
-
       } catch (IOException e) {
-        System.out.println("Falhou");
+        System.out.println("File reading exception");
       }
-
     try {
-      server = (RMIServerInterface) LocateRegistry.getRegistry(mainIP, mainPort).lookup("ivotas");
+      rmiServer = (RMIServerInterface) LocateRegistry.getRegistry(ip, port).lookup("ivotas");
 		} catch(NotBoundException|RemoteException e) {
-      System.out.println("Error connecting to rmi");
+      this.rmiServer = this.connectRMIInterface();
+      System.out.println("Exception connecting to rmi");
     }
 	}
 
-	public ArrayList<User> getAllUsers() throws RemoteException {
-		return server.getAllUsers();
+  private RMIServerInterface connectRMIInterface() {
+    RMIServerInterface rmi = null;
+    boolean passed = false;
+
+    while (true) {
+      try {
+        // primeiro arg é o ip
+        rmi = (RMIServerInterface) LocateRegistry.getRegistry(this.getIp(), this.getPort()).lookup("ivotas");
+        //r.addAdmin(a);
+        rmi.remote_print("New client");
+        passed = true;
+      } catch (Exception e) {
+        try {
+          TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException es) {
+          System.out.println("Error sleep: " + es.getMessage());
+        }
+      }
+
+      if (passed) {
+        break;
+      }
+    }
+
+    return rmi;
+  }
+
+
+  public ArrayList<User> getAllUsers(){
+    System.out.println("Was called");
+    ArrayList<User> users = new ArrayList<>();
+
+    try {
+      System.out.println("didnt pass");
+      users = rmiServer.getAllUsers();
+      System.out.println("pass");
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return users;
 	}
 
-  public ArrayList<String> getAllElections() throws RemoteException {
-    return server.getValidElections(this.username);
+  public ArrayList<String> getAllElections() {
+    ArrayList<String> validElections = new ArrayList<>();
+
+    try {
+      validElections = rmiServer.getValidElections(this.username);
+    } catch (RemoteException e) {
+       this.rmiServer = this.connectRMIInterface();
+    }
+
+    return validElections;
   }
 
-  public ArrayList<CandidateList> getAllCandidateLists(String election) throws RemoteException {
-    return server.getAllCandidateLists();
+  public ArrayList<CandidateList> getAllCandidateLists(String election) {
+    ArrayList<CandidateList> candidateLists = new ArrayList<>();
+
+    try {
+      candidateLists = rmiServer.getAllCandidateLists();
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return candidateLists;
   }
 
-	public boolean authenticateUser() throws RemoteException {
-    return server.authenticateUser(this.username, this.password);
-	}
+	public boolean authenticateUser() {
+    boolean authUser = false;
 
-  public User getUserByName(String username) throws RemoteException {
-    return server.getUserByName(username);
+    try {
+      authUser = rmiServer.authenticateUser(this.username, this.password);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return authUser;
   }
 
-  public Election getElectionByName(String electionName) throws RemoteException {
-    return server.getElectionByName(electionName);
+  public User getUserByName(String username) {
+    User user = null;
+
+    try {
+      user = rmiServer.getUserByName(username);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return user;
   }
 
-  public CandidateList getCandidateListByName(String candidateListName) throws RemoteException {
-    return server.getCandidateListByName(candidateListName);
+  public Election getElectionByName(String electionName) {
+    Election election = null;
+
+    try {
+      election = rmiServer.getElectionByName(electionName);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return election;
   }
 
-  public void vote(User user, Election election, CandidateList candidateList) throws RemoteException {
-	  server.vote(user, election, candidateList);
+  public CandidateList getCandidateListByName(String candidateListName) {
+    CandidateList candidateList = null;
+
+    try {
+       candidateList = rmiServer.getCandidateListByName(candidateListName);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return candidateList;
+  }
+
+  // TODO change this
+  public void vote(User user, Election election, CandidateList candidateList) {
+    try {
+      rmiServer.vote(user, election, candidateList);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
   }
 	
 	public void setUsername(String username) {
@@ -100,4 +183,19 @@ public class IVotasBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+  public int getPort() {
+    return port;
+  }
+  public void setPort(int port) {
+    this.port = port;
+  }
+
+  public String getIp() {
+    return ip;
+  }
+  public void setIp(String ip) {
+    this.ip = ip;
+  }
+
 }

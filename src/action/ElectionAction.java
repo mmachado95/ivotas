@@ -17,12 +17,8 @@ public class ElectionAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
-    try {
-      this.setElection(this.getIVotasBean().getElectionByName(electionName));
-      System.out.println(election);
-    } catch (RemoteException e) {
-      System.out.println("Exception retrieving election.");
-    }
+    this.setElection(this.getIVotasBean().getElectionByName(electionName));
+    System.out.println(election);
 
     return SUCCESS;
   }

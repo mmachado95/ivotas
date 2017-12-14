@@ -27,15 +27,10 @@ public class VoteAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
-    try {
-      User user = this.getIVotasBean().getUserByName((String) session.get("username"));
-      Election election = this.getIVotasBean().getElectionByName(electionName);
-      CandidateList candidateList = this.getIVotasBean().getCandidateListByName(candidateListName);
-      this.getIVotasBean().vote(user, election, candidateList);
-    } catch (RemoteException e) {
-      System.out.println("Exception retrieving election.");
-      return ERROR;
-    }
+    User user = this.getIVotasBean().getUserByName((String) session.get("username"));
+    Election election = this.getIVotasBean().getElectionByName(electionName);
+    CandidateList candidateList = this.getIVotasBean().getCandidateListByName(candidateListName);
+    this.getIVotasBean().vote(user, election, candidateList);
 
     return SUCCESS;
   }

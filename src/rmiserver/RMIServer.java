@@ -6,8 +6,10 @@ package rmiserver;
 import Data.*;
 
 import java.io.IOException;
+import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
 	private static final long serialVersionUID = 20141107L;
@@ -47,6 +49,26 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 			System.out.println("java.io.IOException " + e);
 		}
 	}
+
+  public static void main(String args[]) {
+    if(args.length != 1) {
+      System.out.println("java -jar dataserver.jar RMIPort");
+      System.exit(0);
+    }
+
+    int registryPort = Integer.parseInt(args[0]);
+    Registry reg = null;
+
+    try {
+      RMIServerInterface rmiServer = new RMIServer();
+      reg = LocateRegistry.createRegistry(registryPort);
+      reg.rebind("ivotas", rmiServer);
+    } catch (RemoteException e) {
+      System.out.println("Failed to start rmi");
+    }
+    System.out.println("RMI Server ready.");
+  }
+
 
   public synchronized int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) throws RemoteException {
     Department department = getDepartmentByName(departmentName);
@@ -670,10 +692,4 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     return electionNames;
   }
-	
-	public static void main(String[] args) throws RemoteException {
-		RMIServerInterface s = new RMIServer();
-		LocateRegistry.createRegistry(9000).rebind("ivotas", s);
-		System.out.println("Server ready...");
-	}
 }

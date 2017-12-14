@@ -24,13 +24,13 @@ public class LoginAction extends ActionSupport implements SessionAware {
         this.getIVotasBean().setPassword(this.password);
 
         if (this.getIVotasBean().authenticateUser()) {
-          System.out.println("Great Sucess");
           session.put("username", username);
           session.put("password", password);
           session.put("loggedin", true); // this marks the user as logged in
           return SUCCESS;
         }
       } catch (Exception e) {
+        e.printStackTrace();
         System.out.println("Rmi exceptions");
       }
 		}
