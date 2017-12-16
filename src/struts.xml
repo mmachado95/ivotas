@@ -69,6 +69,11 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="success">/vote.jsp</result>
         </action>
 
+        <action name="createVote" class="action.VoteAction" method="createVote">
+            <result name="success">/WEB-INF/index.jsp</result>
+            <result name="error">/WEB-INF/index.jsp</result>
+        </action>
+
     </package>
 
 </struts>

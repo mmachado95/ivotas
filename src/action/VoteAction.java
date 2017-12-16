@@ -14,20 +14,33 @@ public class VoteAction extends ActionSupport implements SessionAware {
   private static final long serialVersionUID = 128L;
   private Map<String, Object> session;
   private String electionName = null;
-  private User user = null;
+  private String listName = null;
   private Election election = null;
   private ArrayList<CandidateList> candidateLists = null;
 
   @Override
   public String execute() {
-    String username = (String) this.session.get("username");
-    this.setUser(this.getIVotasBean().getUserByName(username));
-    this.setElection(this.getIVotasBean().getElectionByName(electionName));
-    this.setCandidateLists(election.getCandidateLists());
-    System.out.println("entrou aqui");
-    System.out.println(user);
-    System.out.println(candidateLists);
+    this.setElectionName(electionName);
+    election = this.getIVotasBean().getElectionByName(electionName);
+    candidateLists = election.getCandidateLists();
 
+    return SUCCESS;
+  }
+
+  public String createVote() {
+    String username = (String) this.session.get("username");
+    CandidateList candidateList = this.getIVotasBean().getCandidateListByName(listName);
+    User user = this.getIVotasBean().getUserByName(username);
+    Election election = this.getIVotasBean().getElectionByName(electionName);
+
+    boolean isValid = this.getIVotasBean().vote(user, election, candidateList);
+
+    if (!isValid) {
+      addActionError("You already voted in this election");
+      return ERROR;
+    }
+
+    addActionMessage("Voted successfully");
     return SUCCESS;
   }
 
@@ -50,16 +63,8 @@ public class VoteAction extends ActionSupport implements SessionAware {
   public String getElectionName() { return electionName; }
   public void setElectionName(String electionName) { this.electionName = electionName; }
 
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public Election getElection() { return election; }
-  public void setElection(Election election) { this.election = election; }
+  public String getListName() { return listName; }
+  public void setListName(String listName) { this.listName = listName; }
 
   public ArrayList<CandidateList> getCandidateLists() { return candidateLists; }
   public void setCandidateLists(ArrayList<CandidateList> candidateLists) { this.candidateLists = candidateLists; }

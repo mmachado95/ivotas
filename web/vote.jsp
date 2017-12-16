@@ -10,8 +10,11 @@
 </head>
 <body>
 
-<c:forEach items="${candidateLists}" var="value">
-    <p><a href="${session.iVotasBean.vote(user, election, value)}"><c:out value="${value.name}" /></a></p><br>
+<c:forEach items="${candidateLists}" var="candidateList">
+    <s:url action="createVote" var="voteTag" >
+        <s:param name="listName"><c:out value="${candidateList.name}" /></s:param>
+    </s:url>
+    <p><a href="<s:property value="#voteTag" />&electionName=${electionName}" ><c:out value="${candidateList.name}" /></a></p><br>
 </c:forEach>
 
 <p><a href="<s:url action="index" />">Voltar</a></p><br>
