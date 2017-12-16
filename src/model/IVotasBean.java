@@ -167,13 +167,18 @@ public class IVotasBean {
     return candidateList;
   }
 
-  // TODO change this
-  public void vote(User user, Election election, CandidateList candidateList) {
+  public boolean vote(User user, Election election, CandidateList candidateList) {
     try {
-      rmiServer.vote(user, election, candidateList);
+      if (!rmiServer.webVoteIsValid(user, election, candidateList)) {
+        return false;
+      }
+
+      rmiServer.webVote(user, election, candidateList);
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
     }
+
+    return true;
   }
 	
 	public void setUsername(String username) {

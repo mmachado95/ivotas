@@ -67,10 +67,15 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="success">/election.jsp</result>
         </action>
 
-        <!-- 'election' action calls 'execute' in 'Election Auction' -->
+        <!-- 'vote' action calls 'execute' in 'Vote Auction' -->
         <action name="vote" class="action.VoteAction" method="execute">
             <interceptor-ref name="defaultStack" />
+            <result name="success">/vote.jsp</result>
+        </action>
+
+        <action name="createVote" class="action.VoteAction" method="createVote">
             <result name="success">/WEB-INF/index.jsp</result>
+            <result name="error">/WEB-INF/index.jsp</result>
         </action>
 
     </package>

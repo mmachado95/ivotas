@@ -9,6 +9,12 @@
 <title>Hey!</title>s
 </head>
 <body>
+    <s:if test="hasActionErrors()">
+        <s:actionerror/>
+    </s:if>
+    <s:if test="hasActionMessages()">
+        <s:actionmessage/>
+    </s:if>
 
 	<c:choose>
 		<c:when test="${session.loggedin == true}">
