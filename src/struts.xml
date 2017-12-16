@@ -31,8 +31,6 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="input">/login.jsp</result>
         </global-results>
 
-
-
         <!-- all exceptions not caught by the application will lead to error.jsp -->
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="error" />
@@ -41,6 +39,12 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <!-- 'index' action leads to the view provided by login.jsp -->
         <action name="index">
             <result>/WEB-INF/index.jsp</result>
+        </action>
+
+        <!-- 'admin' action calls 'execute' in 'AdminAction' -->
+        <action name="admin" class="action.AdminAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
         </action>
 
         <!-- 'login' action calls 'execute' in 'LoginAction' -->
