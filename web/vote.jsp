@@ -10,16 +10,13 @@
 </head>
 <body>
 
-<s:property value="election.name"/>
-<br>
-<s:property value="election.description"/>
+<c:forEach items="${candidateLists}" var="candidateList">
+    <s:url action="createVote" var="voteTag" >
+        <s:param name="listName"><c:out value="${candidateList.name}" /></s:param>
+    </s:url>
+    <p><a href="<s:property value="#voteTag" />&electionName=${electionName}" ><c:out value="${candidateList.name}" /></a></p><br>
+</c:forEach>
 
-
-<s:url action="vote" var="voteTag">
-    <s:param name="electionName"> <c:out value="${electionName}" /> </s:param>
-</s:url>
-
-<p><a href="<s:property value="#voteTag" />">Votar</a></p><br>
 <p><a href="<s:url action="index" />">Voltar</a></p><br>
 </body>
 </html>

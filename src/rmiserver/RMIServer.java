@@ -552,20 +552,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return false;
   }
 
-  public synchronized void vote(User user, Election election, CandidateList candidateList) throws RemoteException {
+  public synchronized void vote(User user, Election election, CandidateList candidateList, Department department) throws RemoteException {
     Vote vote;
 
     if (candidateList == null) {
-      vote = new Vote(user, election);
+      vote = new Vote(user, election, department);
     } else {
-      vote = new Vote(user, election, candidateList);
+      vote = new Vote(user, election, candidateList, department);
     }
-
-    System.out.println("got here");
-    System.out.println(user);
-    System.out.println(election);
-    System.out.println(candidateList);
-    System.out.println(vote);
 
     this.votes.add(vote);
     updateFile(this.votes, "Votes");
@@ -576,6 +570,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         numberOfVotes += 1;
       }
     }
+
+    notifyAdmins("New vote on election " + election.getName() +
+            ". \nCurrent number of votes " + numberOfVotes);
   }
 
   public synchronized boolean voteIsValid(User user, VotingTable votingTable, CandidateList candidateList) throws RemoteException {
@@ -584,7 +581,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     if (!(currentTime >= votingTable.getElection().getStartDate() && currentTime < votingTable.getElection().getEndDate())) {
       return false;
     }
-
 
     // nucleo de estudantes
     if (election.getType() == 1) {
@@ -608,6 +604,49 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     return false;
   }
+
+  public synchronized void webVote(User user, Election election, CandidateList candidateList) throws RemoteException {
+    Vote vote;
+
+    if (candidateList == null) {
+      vote = new Vote(user, election);
+    } else {
+      vote = new Vote(user, election, candidateList);
+    }
+
+    this.votes.add(vote);
+    updateFile(this.votes, "Votes");
+  }
+
+  public synchronized boolean webVoteIsValid(User user, Election election, CandidateList candidateList) throws RemoteException {
+    long currentTime = currentTimestamp();
+    if (!(currentTime >= election.getStartDate() && currentTime < election.getEndDate())) {
+      return false;
+    }
+
+    // nucleo de estudantes
+    if (election.getType() == 1) {
+      if (user.getDepartment().getName().equals(election.getDepartment().getName()) &&
+              user.getType() == 1 &&
+              getVoteByUserAndElection(user, election) == null
+              ) {
+        return true;
+      }
+    } else { // conselho geral
+      if (candidateList != null) {
+        if (user.getType() == candidateList.getUsersType() && getVoteByUserAndElection(user, election) == null) {
+          return true;
+        }
+      } else {
+        if (getVoteByUserAndElection(user, election) == null) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
 
   private long currentTimestamp() {
     long date = 0;

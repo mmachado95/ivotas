@@ -385,7 +385,7 @@ class Connection extends Thread {
       try {
         if (rmi.voteIsValid(user, this.tableServer.getVotingTable(), voteList)) {
           voteIsValid += "success ;";
-          this.rmi.vote(user, this.tableServer.getVotingTable().getElection(), voteList);
+          this.rmi.vote(user, this.tableServer.getVotingTable().getElection(), voteList, this.tableServer.getVotingTable().getDepartment());
         } else {
           voteIsValid += "failed ;";
         }

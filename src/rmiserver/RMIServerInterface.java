@@ -124,10 +124,16 @@ public interface RMIServerInterface extends Remote {
   boolean authenticateUser(String name, String password) throws RemoteException;
 
   /** Giver a user, election, candidate list and department, votes */
-  void vote(User user, Election election, CandidateList candidateList) throws RemoteException;
+  void vote(User user, Election election, CandidateList candidateList, Department department) throws RemoteException;
 
   /** Return true if vote is valid and false otherwise. */
   boolean voteIsValid(User user, VotingTable votingTable, CandidateList candidateList) throws RemoteException;
+
+  /** Giver a user, election, candidate list and department, votes */
+  void webVote(User user, Election election, CandidateList candidateList) throws RemoteException;
+
+  /** Return true if vote is valid and false otherwise. */
+  boolean webVoteIsValid(User user, Election election, CandidateList candidateList) throws RemoteException;
 
  void subscribe(AdminInterface c) throws RemoteException;
 

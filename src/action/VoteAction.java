@@ -7,31 +7,40 @@ import com.opensymphony.xwork2.ActionSupport;
 import model.IVotasBean;
 import org.apache.struts2.interceptor.SessionAware;
 
-import java.rmi.RemoteException;
-import java.util.Map;
-
-import Data.Election;
-import com.opensymphony.xwork2.ActionSupport;
-import model.IVotasBean;
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.SessionAware;
-
-import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class VoteAction extends ActionSupport implements SessionAware {
-  private static final long serialVersionUID = 127L;
+  private static final long serialVersionUID = 128L;
   private Map<String, Object> session;
   private String electionName = null;
-  private String candidateListName = null;
+  private String listName = null;
+  private Election election = null;
+  private ArrayList<CandidateList> candidateLists = null;
 
   @Override
   public String execute() {
-    User user = this.getIVotasBean().getUserByName((String) session.get("username"));
-    Election election = this.getIVotasBean().getElectionByName(electionName);
-    CandidateList candidateList = this.getIVotasBean().getCandidateListByName(candidateListName);
-    this.getIVotasBean().vote(user, election, candidateList);
+    this.setElectionName(electionName);
+    election = this.getIVotasBean().getElectionByName(electionName);
+    candidateLists = election.getCandidateLists();
 
+    return SUCCESS;
+  }
+
+  public String createVote() {
+    String username = (String) this.session.get("username");
+    CandidateList candidateList = this.getIVotasBean().getCandidateListByName(listName);
+    User user = this.getIVotasBean().getUserByName(username);
+    Election election = this.getIVotasBean().getElectionByName(electionName);
+
+    boolean isValid = this.getIVotasBean().vote(user, election, candidateList);
+
+    if (!isValid) {
+      addActionError("You already voted in this election");
+      return ERROR;
+    }
+
+    addActionMessage("Voted successfully");
     return SUCCESS;
   }
 
@@ -50,4 +59,13 @@ public class VoteAction extends ActionSupport implements SessionAware {
   public void setSession(Map<String, Object> session) {
     this.session = session;
   }
+
+  public String getElectionName() { return electionName; }
+  public void setElectionName(String electionName) { this.electionName = electionName; }
+
+  public String getListName() { return listName; }
+  public void setListName(String listName) { this.listName = listName; }
+
+  public ArrayList<CandidateList> getCandidateLists() { return candidateLists; }
+  public void setCandidateLists(ArrayList<CandidateList> candidateLists) { this.candidateLists = candidateLists; }
 }
