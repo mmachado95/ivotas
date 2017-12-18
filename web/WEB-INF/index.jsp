@@ -16,8 +16,7 @@
         <s:actionmessage/>
     </s:if>
 
-    <p><a href="https://www.facebook.com/v2.11/dialog/oauth?client_id=1486604264709457&redirect_uri=http://127.0.0.1:8080/connectFacebook">Connect Facebook</a></p><br>
-
+    <p><a href="https://www.facebook.com/v2.2/dialog/oauth?client_id=1486604264709457&redirect_uri=http://127.0.0.1:8080/connectFacebook&scope=publish_actions">Connect Facebook</a></p><br>
 
 	<c:forEach items="${session.iVotasBean.getAllElections()}" var="value">
         <s:url action="election" var="electionTag">

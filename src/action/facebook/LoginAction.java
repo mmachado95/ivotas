@@ -16,10 +16,9 @@ import org.json.simple.JSONValue;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-public class connectAction extends ActionSupport implements SessionAware {
+public class LoginAction extends ActionSupport implements SessionAware {
   private static final long serialVersionUID = 4231L;
   private Map<String, Object> session;
   public String code = null;
@@ -30,12 +29,10 @@ public class connectAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
-    System.out.println(code);
-
     // Build service to send request to Facebook
     final OAuth20Service service = new ServiceBuilder(clientId)
             .apiSecret(clientSecret)
-            .callback("http://127.0.0.1:8080/connectFacebook")
+            .callback("http://127.0.0.1:8080/loginFacebook")
             .scope("publish_actions")
             .build(FacebookApi.instance());
 
@@ -49,19 +46,20 @@ public class connectAction extends ActionSupport implements SessionAware {
 
       // Get response from API
       final Response response = service.execute(request);
-      System.out.println(response);
-      System.out.println(response.getCode());
-      System.out.println(response.getMessage());
-      System.out.println(response.getBody());
 
       // Parse response
       JSONObject body = (JSONObject) JSONValue.parse(response.getBody());
 
-      // Update user attributes with facebook association
-      User user = this.getIVotasBean().getUserByName((String)session.get("username"));
-      user.setFacebookID((String)body.get("id"));
-      user.setFacebookName((String)body.get("name"));
-      user.setFacebookAccessToken(accessToken.getAccessToken());
+      User user = this.getIVotasBean().getUserByFacebookID((String)body.get("id"));
+
+      if (user != null) {
+        this.getIVotasBean().setUsername(user.getName());
+        this.getIVotasBean().setPassword(user.getPassword());
+        session.put("username", user.getName());
+        session.put("password", user.getPassword());
+        session.put("loggedin", true);
+        return SUCCESS;
+      }
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {
@@ -70,7 +68,7 @@ public class connectAction extends ActionSupport implements SessionAware {
       e.printStackTrace();
     }
 
-    return SUCCESS;
+    return LOGIN;
   }
 
 
@@ -80,10 +78,12 @@ public class connectAction extends ActionSupport implements SessionAware {
     }
     return (IVotasBean) session.get("iVotasBean");
   }
-
   public void setHeyBean(IVotasBean iVotasBean) {
     this.session.put("iVotasBean", iVotasBean);
   }
+
+  public String getCode() { return code; }
+  public void setCode(String code) { this.code = code; }
 
   @Override
   public void setSession(Map<String, Object> session) {

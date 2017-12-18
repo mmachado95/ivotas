@@ -8,6 +8,8 @@
 	<title>Hey!</title>
 </head>
 <body>
+	<p><a href="https://www.facebook.com/v2.2/dialog/oauth?client_id=1486604264709457&redirect_uri=http://127.0.0.1:8080/loginFacebook&scope=publish_actions">Login Facebook</a></p><br>
+
 	<s:form action="login" method="post">
 		<s:text name="Username:" />
 		<s:textfield name="username" /><br>

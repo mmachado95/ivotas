@@ -13,7 +13,6 @@ public class User implements Serializable {
   private String expireDate;
   private int type;
   private String facebookID;
-  private String facebookName;
   private String facebookAccessToken;
 
   public User() {}
@@ -29,7 +28,6 @@ public class User implements Serializable {
     this.expireDate = expireDate;
     this.type = type;
     this.facebookID = null;
-    this.facebookName = null;
     this.facebookAccessToken = null;
   }
 
@@ -65,13 +63,6 @@ public class User implements Serializable {
   }
   public void setFacebookID(String facebookID) {
     this.facebookID = facebookID;
-  }
-
-  public String getFacebookName() {
-    return facebookName;
-  }
-  public void setFacebookName(String facebookName) {
-    this.facebookName = facebookName;
   }
 
   public String getFacebookAccessToken() {
