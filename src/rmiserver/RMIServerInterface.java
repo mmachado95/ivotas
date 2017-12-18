@@ -152,5 +152,5 @@ public interface RMIServerInterface extends Remote {
 
   public User getUserByFacebookID(String facebookId) throws RemoteException;
 
-  public void connectFacebookWithUser(String username, String facebookId) throws RemoteException;
+  public void connectFacebookWithUser(String username, String facebookId, String accessToken) throws RemoteException;
 }

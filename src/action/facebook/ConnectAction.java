@@ -30,8 +30,6 @@ public class ConnectAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
-    System.out.println(code);
-
     // Build service to send request to Facebook
     final OAuth20Service service = new ServiceBuilder(clientId)
             .apiSecret(clientSecret)
@@ -58,7 +56,7 @@ public class ConnectAction extends ActionSupport implements SessionAware {
       JSONObject body = (JSONObject) JSONValue.parse(response.getBody());
 
       // Update user attributes with facebook association
-      this.getIVotasBean().connectFacebookWithUser((String) session.get("username"), (String) body.get("id"));
+      this.getIVotasBean().connectFacebookWithUser((String) session.get("username"), (String) body.get("id"), accessToken.getAccessToken());
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InterruptedException e) {

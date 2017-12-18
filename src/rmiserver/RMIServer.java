@@ -765,12 +765,13 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return user;
   }
 
-  public void connectFacebookWithUser(String username, String facebookId) throws RemoteException {
+  public void connectFacebookWithUser(String username, String facebookId, String accessToken) throws RemoteException {
     // Find user that called connect action
     for (User user : this.users) {
       if (user.getName().equals(username)) {
         // set facebook id of user and update objects file
         user.setFacebookID(facebookId);
+        user.setFacebookAccessToken(accessToken);
         this.updateFile(this.users, "Users");
         return;
       }

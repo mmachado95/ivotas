@@ -3,6 +3,7 @@ package action;
 import Data.CandidateList;
 import Data.Election;
 import Data.User;
+import action.facebook.Post;
 import com.opensymphony.xwork2.ActionSupport;
 import model.IVotasBean;
 import org.apache.struts2.interceptor.SessionAware;
@@ -41,6 +42,12 @@ public class VoteAction extends ActionSupport implements SessionAware {
     }
 
     addActionMessage("Voted successfully");
+
+    if (user.getFacebookID() != null && user.getFacebookAccessToken() != null) {
+      Post post = new Post();
+      String message = "I+just+voted+for+" + candidateList.getName().replace(" ", "") + "+at+" + electionName.replace(" ", "");
+      post.votePost(user.getFacebookID(), user.getFacebookAccessToken(), message);
+    }
     return SUCCESS;
   }
 

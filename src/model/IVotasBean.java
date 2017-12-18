@@ -155,9 +155,9 @@ public class IVotasBean {
     return user;
   }
 
-  public void connectFacebookWithUser(String username, String facebookID) {
+  public void connectFacebookWithUser(String username, String facebookID, String accessToken) {
     try {
-      rmiServer.connectFacebookWithUser(username, facebookID);
+      rmiServer.connectFacebookWithUser(username, facebookID, accessToken);
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
     }
