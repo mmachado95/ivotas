@@ -135,7 +135,7 @@ public interface RMIServerInterface extends Remote {
   /** Return true if vote is valid and false otherwise. */
   boolean webVoteIsValid(User user, Election election, CandidateList candidateList) throws RemoteException;
 
- void subscribe(AdminInterface c) throws RemoteException;
+  void subscribe(AdminInterface c) throws RemoteException;
 
   void unsubscribe(AdminInterface c) throws RemoteException;
 

@@ -9,7 +9,7 @@
     <title>iVotas</title>
 </head>
 <body>
-    <a href="register_person.jsp">Registar Pessoa</a> <br><br>
+    <a href="<s:url action="registerPerson" />">Registar Pessoa</a> <br><br>
     <a>Criar Eleição</a> <br><br>
     <a>Criar Lista de Candidatos</a> <br><br>
     <a>Listar Eleições e Detalhes</a> <br><br>

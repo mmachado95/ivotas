@@ -79,6 +79,19 @@ public class IVotasBean {
     return rmi;
   }
 
+  public int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) {
+    int createUser = 0;
+
+    try {
+      createUser = rmiServer.createUser(name, password, departmentName, facultyName, contact, address, cc, expireDate, type);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    System.out.println(createUser);
+    return createUser;
+  }
+
 
   public ArrayList<User> getAllUsers(){
     System.out.println("Was called");

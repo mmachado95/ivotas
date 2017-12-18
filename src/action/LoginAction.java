@@ -27,7 +27,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
           session.put("username", username);
           session.put("password", password);
           session.put("loggedin", true); // this marks the user as logged in
-					System.out.println("oooooiii");
 					return SUCCESS;
         }
       } catch (Exception e) {

@@ -9,6 +9,34 @@
     <title>iVotas</title>
 </head>
 <body>
-    <h2>oiiii</h2>
+    <s:if test="hasActionErrors()">
+        <s:actionerror/>
+    </s:if>
+    <s:if test="hasActionMessages()">
+        <s:actionmessage/>
+    </s:if>
+
+    <h2>Registar Pessoa</h2>
+    <s:form action="registerPerson" method="post">
+        <s:text name="Username:" />
+        <s:textfield name="username" /><br>
+        <s:text name="Password:" />
+        <s:textfield name="password" /><br>
+        <s:text name="Department:" />
+        <s:textfield name="departmentName" /><br>
+        <s:text name="Faculty:" />
+        <s:textfield name="facultyName" /><br>
+        <s:text name="Contact:" />
+        <s:textfield name="contact" /><br>
+        <s:text name="Address:" />
+        <s:textfield name="address" /><br>
+        <s:text name="CC:" />
+        <s:textfield name="cc" /><br>
+        <s:text name="Expire Date" />
+        <s:textfield name="expireDate" /><br>
+        <s:text name="Type:" />
+        <s:textfield name="type" /><br>
+        <s:submit />
+    </s:form>
 </body>
 </html>

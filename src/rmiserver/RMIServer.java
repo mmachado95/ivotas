@@ -75,14 +75,17 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) throws RemoteException {
     Department department = getDepartmentByName(departmentName);
-    if (department == null)
+    if (department == null) {
       return 2;
+    }
 
     Faculty faculty = getFacultyByName(facultyName);
-    if (faculty == null)
+    if (faculty == null) {
       return 3;
+    }
 
     User user = new User(name, password, department, faculty, contact, address, cc, expireDate, type);
+
     this.users.add(user);
     updateFile(this.users, "Users");
     return 1;
