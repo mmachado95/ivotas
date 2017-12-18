@@ -100,8 +100,20 @@ public class IVotasBean {
       this.rmiServer = this.connectRMIInterface();
     }
 
-    System.out.println(createElection);
     return createElection;
+  }
+
+  public int createVotingTable(String electionName, String departmentName) {
+    int createVotingTable = 0;
+
+    try {
+      createVotingTable = rmiServer.createVotingTable(electionName, departmentName);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    System.out.println(createVotingTable);
+    return createVotingTable;
   }
 
 
