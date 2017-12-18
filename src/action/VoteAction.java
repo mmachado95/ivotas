@@ -45,7 +45,7 @@ public class VoteAction extends ActionSupport implements SessionAware {
 
     if (user.getFacebookID() != null && user.getFacebookAccessToken() != null) {
       Post post = new Post();
-      String message = "I+just+voted+for+" + candidateList.getName().replace(" ", "") + "+at+" + electionName.replace(" ", "");
+      String message = "I+just+voted+for+" + candidateList.getName().replace(" ", "+") + "+at+" + electionName.replace(" ", "+");
       post.votePost(user.getFacebookID(), user.getFacebookAccessToken(), message);
     }
     return SUCCESS;
