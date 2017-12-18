@@ -88,8 +88,20 @@ public class IVotasBean {
       this.rmiServer = this.connectRMIInterface();
     }
 
-    System.out.println(createUser);
     return createUser;
+  }
+
+  public int createElection(String name, String description, long startDate, long endDate, int type) {
+    int createElection = 0;
+
+    try {
+      createElection = rmiServer.createElection(name, description, startDate, endDate, type);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    System.out.println(createElection);
+    return createElection;
   }
 
 

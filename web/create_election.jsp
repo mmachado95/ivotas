@@ -17,18 +17,19 @@
 </s:if>
 
 <h2>Criar Eleição</h2>
-<s:form action="createElection" method="post">
-    <s:text name="Name:" />
-    <s:textfield name="name" /><br>
-    <s:text name="Description:" />
-    <s:textfield name="description" /><br>
-    <s:text name="Start Date:" />
-    <s:textfield name="startDate" /><br>
-    <s:text name="End Date:" />
-    <s:textfield name="endDate" /><br>
-    <s:text name="Type:" />
-    <s:textfield name="type" /><br>
-    <s:submit />
-</s:form>
+
+<form action="createElection" method="post">
+    <p>Name</p>
+    <input type="text" name="name"/>
+    <p>Description</p>
+    <input type="text" name="description"/>
+    <p>Start Date</p>
+    <input type="text" name="startDate" value="dd/MM/yyyy hh:mm:ss"/>
+    <p>End Date</p>
+    <input type="text" name="endDate" value="dd/MM/yyyy hh:mm:ss"/>
+    <p>Type</p>
+    <input type="text" name="type"/>
+    <input type="submit"/>
+</form>
 </body>
 </html>

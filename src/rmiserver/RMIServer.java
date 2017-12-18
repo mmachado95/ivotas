@@ -112,11 +112,15 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized int createElection(String name, String description, long startDate, long endDate, int type) throws RemoteException {
     if (startDate < currentTimestamp()) {
+      return 3;
+    }
+    if (startDate > endDate) {
       return 2;
     }
     Election election = new Election(name, description, startDate, endDate, type);
     this.elections.add(election);
     this.updateFile(this.elections, "Elections");
+    System.out.println(elections);
     return 1;
   }
 
