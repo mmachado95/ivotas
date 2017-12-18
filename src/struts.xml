@@ -50,6 +50,11 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="login">/login.jsp</result>
         </action>
 
+        <action name="connectFacebook" class="action.facebook.connectAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/WEB-INF/index.jsp</result>
+        </action>
+
         <!-- 'logout' action calls 'execute' in 'LogoutAction' -->
         <action name="logout" class="action.LogoutAction" method="execute">
             <interceptor-ref name="defaultStack" />

@@ -12,6 +12,9 @@ public class User implements Serializable {
   private String cc;
   private String expireDate;
   private int type;
+  private String facebookID;
+  private String facebookName;
+  private String facebookAccessToken;
 
   public User() {}
 
@@ -25,6 +28,9 @@ public class User implements Serializable {
     this.cc = cc;
     this.expireDate = expireDate;
     this.type = type;
+    this.facebookID = null;
+    this.facebookName = null;
+    this.facebookAccessToken = null;
   }
 
   public String getName() { return name; }
@@ -53,6 +59,27 @@ public class User implements Serializable {
 
   public int getType() { return type; }
   public void setType(int type) { this.type = type; }
+
+  public String getFacebookID() {
+    return facebookID;
+  }
+  public void setFacebookID(String facebookID) {
+    this.facebookID = facebookID;
+  }
+
+  public String getFacebookName() {
+    return facebookName;
+  }
+  public void setFacebookName(String facebookName) {
+    this.facebookName = facebookName;
+  }
+
+  public String getFacebookAccessToken() {
+    return facebookAccessToken;
+  }
+  public void setFacebookAccessToken(String facebookAccessToken) {
+    this.facebookAccessToken = facebookAccessToken;
+  }
 
   public String prettyPrint() {
     String res = "Name: " + this.name + "\nDepartment: " + this.department.getName() + "\nFaculty: " + this.faculty.getName()
