@@ -47,4 +47,35 @@ public class Post {
       e.printStackTrace();
     }
   }
+
+  public void shareElection(String facebookID, String accessToken, String link) {
+    postUrl += facebookID +  "/";
+    postUrl += "feed?link=" + link+ "&";
+    postUrl += "access_token=" + accessToken;
+
+    final OAuth20Service service = new ServiceBuilder(clientId)
+            .apiSecret(clientSecret)
+            .callback("http://127.0.0.1:8080/")
+            .scope("publish_actions")
+            .build(FacebookApi.instance());
+
+    try {
+      // Get user id and name
+      final OAuthRequest request = new OAuthRequest(Verb.POST, postUrl);
+      service.signRequest(accessToken, request);
+
+      // Get response from API
+      final Response response = service.execute(request);
+      System.out.println(response);
+      System.out.println(response.getCode());
+      System.out.println(response.getMessage());
+      System.out.println(response.getBody());
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

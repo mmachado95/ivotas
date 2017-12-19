@@ -85,6 +85,10 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="error">/WEB-INF/index.jsp</result>
         </action>
 
+        <action name="shareElection" class="action.facebook.ShareElectionAction" method="execute">
+            <result name="success">/WEB-INF/index.jsp</result>
+        </action>
+
     </package>
 
 </struts>
