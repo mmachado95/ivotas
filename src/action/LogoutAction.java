@@ -13,11 +13,6 @@ public class LogoutAction extends ActionSupport implements SessionAware {
   @Override
   public String execute() {
     try {
-      System.out.println(".......testing.........");
-      System.out.println(session.get("username"));
-      System.out.println(session.get("password"));
-      System.out.println(session.get("loggedin"));
-      System.out.println(".......testing.........");
       this.getIVotasBean().setUsername("");
       this.getIVotasBean().setPassword("");
       session.remove("username");
