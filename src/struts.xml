@@ -95,12 +95,12 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="input">/choose_past_elections.jsp</result>
         </action>
 
-        <!-- 'details_of_past_elections' action calls 'execute' in 'DetailsOfPastElectionsAction' -->
+        <!-- 'details_of_past_elections' action calls 'execute' in 'DetailsOfPastElectionsAction'
         <action name="detailsOfPastElections" class="action.DetailsOfPastElectionsAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
             <result name="input">/details_of_past_elections.jsp</result>
-        </action>
+        </action>-->
 
         <!-- 'login' action calls 'execute' in 'LoginAction' -->
         <action name="login" class="action.LoginAction" method="execute">
