@@ -20,15 +20,13 @@
 
 <form action="changeElection" method="post">
     <p>Name</p>
-    <input type="text" name="name"/>
+    <input type="text" name="name" value="${name}"/>
     <p>Description</p>
-    <input type="text" name="description"/>
+    <input type="text" name="description" value="${description}"/>
     <p>Start Date</p>
-    <input type="text" name="startDate" value="dd/MM/yyyy hh:mm:ss"/>
+    <input type="text" name="startDate" value="${startDate}"/>
     <p>End Date</p>
-    <input type="text" name="endDate" value="dd/MM/yyyy hh:mm:ss"/>
-    <p>Type</p>
-    <input type="text" name="type"/>
+    <input type="text" name="endDate" value="${endDate}"/>
     <input type="submit"/>
 </form>
 </body>

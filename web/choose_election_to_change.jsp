@@ -15,13 +15,14 @@
 
 <c:forEach items="${elections}" var="value">
     <s:url action="changeElection" var="electionTag">
-        <s:param name="election"> <c:out value="${value}" /> </s:param>
+        <s:param name="election"> <c:out value="${value.name}" /> </s:param>
     </s:url>
 
     <p><a href="<s:property value="#electionTag" />">
             <c:out value="${value.name}" />
             <c:out value="${value.description}" />
-    </a></p>
+    </a>
+    </p>
     <br><br>
 </c:forEach>
 

@@ -8,14 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
-
-import java.rmi.RemoteException;
-import java.time.MonthDay;
 import java.util.Map;
+
 
 public class CreateElectionAction extends ActionSupport implements SessionAware {
   private Map<String, Object> session;
