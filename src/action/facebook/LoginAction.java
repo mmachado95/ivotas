@@ -58,6 +58,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
         session.put("username", user.getName());
         session.put("password", user.getPassword());
         session.put("loggedin", true);
+        session.put("firstTime", true);
         return SUCCESS;
       }
     } catch (IOException e) {
