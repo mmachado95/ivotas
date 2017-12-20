@@ -17,7 +17,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	@Override
 	public String execute() {
-    //TODO any username is accepted without confirmation (should check using RMI)
     if(this.username != null && !username.equals("") && this.password != null && !password.equals("")) {
       try {
         this.getIVotasBean().setUsername(this.username);
@@ -26,7 +25,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
         if (this.getIVotasBean().authenticateUser()) {
           session.put("username", username);
           session.put("password", password);
-          session.put("loggedin", true); // this marks the user as logged in
+          session.put("loggedin", true);
+					session.put("firstTime", true);
 					return SUCCESS;
         }
       } catch (Exception e) {
