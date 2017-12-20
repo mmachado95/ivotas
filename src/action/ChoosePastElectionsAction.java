@@ -8,7 +8,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ChooseElectionToChangeAction extends ActionSupport implements SessionAware {
+public class ChoosePastElectionsAction extends ActionSupport implements SessionAware {
   private Map<String, Object> session;
   private ArrayList<Election> elections;
 
@@ -17,7 +17,6 @@ public class ChooseElectionToChangeAction extends ActionSupport implements Sessi
     elections = this.getIVotasBean().choosePastElections();
     return SUCCESS;
   }
-
 
   public IVotasBean getIVotasBean() {
     if(!session.containsKey("iVotasBean")) {

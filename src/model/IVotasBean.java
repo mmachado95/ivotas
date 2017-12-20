@@ -156,6 +156,18 @@ public class IVotasBean {
     return updateElection;
   }
 
+  public ArrayList<Election> choosePastElections() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(2);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
 
   public ArrayList<User> getAllUsers(){
     System.out.println("Was called");
