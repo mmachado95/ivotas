@@ -137,8 +137,8 @@ public class FileWrapper {
       endDate = simpleDateFormat.parse("20/12/2017 15:20:00").getTime();
       startDate2 = simpleDateFormat.parse("10/04/2017 09:30:00").getTime();
       endDate2 = simpleDateFormat.parse("17/04/2017 19:00:00").getTime();
-      startDate3 = simpleDateFormat.parse("02/03/2017 10:30:00").getTime();
-      endDate3 = simpleDateFormat.parse("09/02/2017 19:00:00").getTime();
+      startDate3 = simpleDateFormat.parse("02/03/2018 10:30:00").getTime();
+      endDate3 = simpleDateFormat.parse("09/05/2018 19:00:00").getTime();
     }
     catch (ParseException e) {
       e.printStackTrace();

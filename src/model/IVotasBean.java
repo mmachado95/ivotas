@@ -120,12 +120,37 @@ public class IVotasBean {
     ArrayList<Election> elections = new ArrayList<>();
 
     try {
-      elections = rmiServer.printElectionsWeb();
+      elections = rmiServer.printElectionsWeb(0);
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
     }
 
     return elections;
+  }
+
+  public ArrayList<Election> chooseElectionToChange() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(1);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
+
+  public int changeElection(Election election) {
+    int updateElection = 0;
+
+    try {
+      updateElection = rmiServer.updateElectionWeb(election);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return updateElection;
   }
 
 

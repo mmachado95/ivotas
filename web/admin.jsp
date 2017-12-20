@@ -14,7 +14,7 @@
     <a>Criar Lista de Candidatos</a> <br><br>
     <a href="<s:url action="listElections" />" >Listar Eleições e Detalhes</a> <br><br>
     <a href="<s:url action="createVotingTable" />">Adicionar Mesa de Voto</a> <br><br>
-    <a>Alterar Propriedades de Eleição</a> <br><br>
+    <a href="<s:url action="chooseElectionToChange" />" >Alterar Propriedades de Eleição</a> <br><br>
     <a>Saber em que local votou cada eleitor</a> <br><br>
     <a>Consultar Detalhes de Eleições Passadas</a> <br><br>
 </body>

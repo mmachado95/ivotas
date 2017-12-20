@@ -68,10 +68,23 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="input">/create_voting_table.jsp</result>
         </action>
 
-        <!-- 'create_voting_table' action calls 'execute' in 'CreateElectionAction' -->
+        <!-- 'list_elections' action calls 'execute' in 'LisElectionsAction' -->
         <action name="listElections" class="action.ListElectionsAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/list_elections.jsp</result>
+        </action>
+
+        <!-- 'choose_election_to_change' action calls 'execute' in 'ChooseElectionToChangeAction' -->
+        <action name="chooseElectionToChange" class="action.ChooseElectionToChangeAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/choose_election_to_change.jsp</result>
+        </action>
+
+        <!-- 'change_election' action calls 'execute' in 'ChangeElectionAction' -->
+        <action name="changeElection" class="action.ChangeElectionAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/change_election.jsp</result>
         </action>
 
         <!-- 'login' action calls 'execute' in 'LoginAction' -->

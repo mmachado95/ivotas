@@ -234,6 +234,23 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return 2; // No elections with that name
   }
 
+  public synchronized int updateElectionWeb(Election election) throws RemoteException {
+    for (int i = 0; i < elections.size(); i++) {
+      if (elections.get(i).getName().equals(election.getName())) {
+
+        if (elections.get(i).getStartDate() < currentTimestamp()) // ElectionAction already started
+          return 4;
+        if (election.getStartDate() >= election.getEndDate()) // Cant end election before it started
+          return 3;
+        elections.set(i, election);
+
+        updateFile(this.elections, "Elections");
+        return 1;
+      }
+    }
+    return 2; // No elections with that name
+  }
+
   public synchronized void removeDepartment(Department department) throws RemoteException {
     for (int i = 0; i < departments.size(); i++) {
       if (departments.get(i).getName().equals(department.getName())) {
@@ -452,9 +469,11 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return res;
   }
 
-  public synchronized ArrayList<Election> printElectionsWeb() throws RemoteException {
+
+  public synchronized ArrayList<Election> printElectionsWeb(int future) throws RemoteException {
     ArrayList<Election> res = new ArrayList<>();
     for (int i = 0; i < elections.size(); i++) {
+      if (future == 0 || (future == 1 && elections.get(i).getEndDate() > currentTimestamp()))
       res.add(elections.get(i));
     }
 

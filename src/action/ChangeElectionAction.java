@@ -1,5 +1,6 @@
 package action;
 
+import Data.Election;
 import com.opensymphony.xwork2.ActionSupport;
 import model.IVotasBean;
 import org.apache.struts2.ServletActionContext;
@@ -17,13 +18,14 @@ import java.rmi.RemoteException;
 import java.time.MonthDay;
 import java.util.Map;
 
-public class CreateElectionAction extends ActionSupport implements SessionAware {
+public class ChangeElectionAction extends ActionSupport implements SessionAware {
   private Map<String, Object> session;
   private String name = null;
   private String description = null;
   private String startDate = null;
   private String endDate = null;
   private String type = null;
+  private String election;
 
 
   private boolean fieldsNotNull() {
@@ -45,12 +47,14 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
 
   @Override
   public String execute() throws ParseException {
+    System.out.println("heeloowef");
     /*
     System.out.println(name);
     System.out.println(description);
     System.out.println(startDate);
     System.out.println(endDate);
     System.out.println(type); */
+    /*
     if (fieldsNotNull()) {
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
@@ -74,6 +78,7 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
           addActionError("Invalid end date Field");
           pass = 0;
         }
+        System.out.println("Goodbye");
 
         if (!StringUtils.isNumeric(type) || Integer.parseInt(type) <= 0 || Integer.parseInt(type) > 2) {
           addActionError("Invalid type Field");
@@ -86,7 +91,9 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
         long startDateLong = simpleDateFormat.parse(startDate).getTime();
         long endDateLong = simpleDateFormat.parse(endDate).getTime();
 
-        int createElection = this.getIVotasBean().createElection(name, description, startDateLong, endDateLong, Integer.parseInt(type));
+
+
+        int createElection = this.getIVotasBean().changeElection(election);
 
         if (createElection == 1) {
           return SUCCESS;
@@ -101,7 +108,7 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
         e.printStackTrace();
         System.out.println("Rmi exceptions");
       }
-    }
+    } */
     return INPUT;
   }
 
@@ -159,5 +166,13 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
 
   public String getType() {
     return type;
+  }
+
+  public void setElection(String election) {
+    this.election = election;
+  }
+
+  public String getElection() {
+    return election;
   }
 }
