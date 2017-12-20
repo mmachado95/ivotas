@@ -192,6 +192,26 @@ public class IVotasBean {
     return user;
   }
 
+  public User getUserByFacebookID(String facebookId) {
+    User user = null;
+
+    try {
+      user = rmiServer.getUserByFacebookID(facebookId);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return user;
+  }
+
+  public void connectFacebookWithUser(String username, String facebookID, String accessToken) {
+    try {
+      rmiServer.connectFacebookWithUser(username, facebookID, accessToken);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+  }
+
   public Election getElectionByName(String electionName) {
     Election election = null;
 

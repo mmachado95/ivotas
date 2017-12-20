@@ -45,7 +45,7 @@ public class FileWrapper {
     // 10 eleitores FCTUC
     User user1= new User("Teresa", "123", department1, faculty1, "9140975123", "Rua A", "11111111",
             "01/18", 1 );
-    User user2= new User("Miguel", "123", department1, faculty1, "91409751234", "Rua B", "11111112",
+    User user2= new User("Miguel Machado", "123", department1, faculty1, "91409751234", "Rua B", "11111112",
             "02/18", 1 );
     User user3= new User("Pedro", "123", department1, faculty1, "9140975125", "Rua C", "11111113",
             "03/18", 1 );
