@@ -19,6 +19,15 @@
     <s:param name="electionName"> <c:out value="${electionName}" /> </s:param>
 </s:url>
 
+
+<s:url action="shareElection" var="shareElectionTag">
+    <s:param name="electionName"> <c:out value="${electionName}" /> </s:param>
+</s:url>
+
+<p><a href="<s:property value="#shareElectionTag" />">Partilhar Eleição</a></p>
+<br>
+<br>
+<br>
 <p><a href="<s:property value="#voteTag" />">Votar</a></p><br>
 <p><a href="<s:url action="index" />">Voltar</a></p><br>
 </body>
