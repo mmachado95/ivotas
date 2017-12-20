@@ -1,5 +1,6 @@
 package action;
 
+import Data.Election;
 import com.opensymphony.xwork2.ActionSupport;
 import model.IVotasBean;
 import org.apache.struts2.ServletActionContext;
@@ -8,26 +9,27 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import java.util.Map;
 
 
-public class CreateElectionAction extends ActionSupport implements SessionAware {
+public class ChangeElectionAction extends ActionSupport implements SessionAware {
   private Map<String, Object> session;
   private String name = null;
   private String description = null;
   private String startDate = null;
   private String endDate = null;
-  private String type = null;
+  private String election;
+  private Election electionObject;
 
 
   private boolean fieldsNotNull() {
     if (name == null &&
             description == null &&
             startDate == null &&
-            endDate == null &&
-            type == null) {
+            endDate == null) {
       return false;
     }
 
@@ -41,14 +43,22 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
 
   @Override
   public String execute() throws ParseException {
-    /*
-    System.out.println(name);
-    System.out.println(description);
-    System.out.println(startDate);
-    System.out.println(endDate);
-    System.out.println(type); */
+    electionObject = this.getIVotasBean().getElectionByName(election);
+    setName(electionObject.getName());
+
+    setEndDate(Long.toString(electionObject.getEndDate()));
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+    Date date = new Date(electionObject.getStartDate());
+    String dateText = simpleDateFormat.format(date);
+    setStartDate(dateText);
+
+    Date date2 = new Date(electionObject.getEndDate());
+    String dateText2 = simpleDateFormat.format(date2);
+    setEndDate(dateText2);
+
     if (fieldsNotNull()) {
-      SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
       try {
         int pass = 1;
@@ -71,10 +81,6 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
           pass = 0;
         }
 
-        if (!StringUtils.isNumeric(type) || Integer.parseInt(type) <= 0 || Integer.parseInt(type) > 2) {
-          addActionError("Invalid type Field");
-          pass = 0;
-        }
         if (pass == 0) {
           return INPUT;
         }
@@ -82,16 +88,21 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
         long startDateLong = simpleDateFormat.parse(startDate).getTime();
         long endDateLong = simpleDateFormat.parse(endDate).getTime();
 
-        int createElection = this.getIVotasBean().createElection(name, description, startDateLong, endDateLong, Integer.parseInt(type));
+        electionObject.setName(name);
+        electionObject.setDescription(description);
+        electionObject.setStartDate(startDateLong);
+        electionObject.setStartDate(endDateLong);
+
+        int createElection = this.getIVotasBean().changeElection(electionObject);
 
         if (createElection == 1) {
           return SUCCESS;
         }
-        else if (createElection == 2) {
-          addActionError("Start date has to be before end date");
-        }
         else if (createElection == 3) {
-          addActionError("You can't create an election in the past");
+          addActionError("Election already started");
+        }
+        else if (createElection == 4) {
+          addActionError("Can't end election before it started");
         }
       } catch (Exception e) {
         e.printStackTrace();
@@ -149,11 +160,19 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
     return endDate;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setElection(String election) {
+    this.election = election;
   }
 
-  public String getType() {
-    return type;
+  public String getElection() {
+    return election;
+  }
+
+  public Election getElectionObject() {
+    return electionObject;
+  }
+
+  public void setElectionObject(Election electionObject) {
+    this.electionObject = electionObject;
   }
 }

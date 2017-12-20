@@ -54,15 +54,13 @@
     <a href="<s:url action="registerPerson" />">Registar Pessoa</a> <br><br>
     <a href="<s:url action="createElection" />">Criar Eleição</a> <br><br>
     <a>Criar Lista de Candidatos</a> <br><br>
-    <a>Listar Eleições e Detalhes</a> <br><br>
+    <a href="<s:url action="listElections" />" >Listar Eleições e Detalhes</a> <br><br>
     <a href="<s:url action="createVotingTable" />">Adicionar Mesa de Voto</a> <br><br>
-    <a>Alterar Propriedades de Eleição</a> <br><br>
+    <a href="<s:url action="chooseElectionToChange" />" >Alterar Propriedades de Eleição</a> <br><br>
     <a>Saber em que local votou cada eleitor</a> <br><br>
     <a>Consultar Detalhes de Eleições Passadas</a> <br><br>
-    <br>
-    <br>
+    <a href="<s:url action="choosePastElections" />">Consultar Detalhes de Eleições Passadas</a> <br><br>
     <div id="users-online">
-
     </div>
 </body>
 </html>

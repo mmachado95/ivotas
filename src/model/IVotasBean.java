@@ -116,6 +116,58 @@ public class IVotasBean {
     return createVotingTable;
   }
 
+  public ArrayList<Election> listElections() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(0);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
+  public ArrayList<Election> chooseElectionToChange() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(1);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
+
+  public int changeElection(Election election) {
+    int updateElection = 0;
+    System.out.println("com");
+
+    try {
+      updateElection = rmiServer.updateElectionWeb(election);
+      System.out.println("massas");
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+      System.out.println("camarao");
+    }
+    System.out.println(updateElection);
+    return updateElection;
+  }
+
+  public ArrayList<Election> choosePastElections() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(2);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
 
   public ArrayList<User> getAllUsers(){
     System.out.println("Was called");

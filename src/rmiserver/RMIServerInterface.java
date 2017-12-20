@@ -149,6 +149,10 @@ public interface RMIServerInterface extends Remote {
   public ArrayList<CandidateList> getAllCandidateLists() throws  RemoteException;
 
   public ArrayList<String> getValidElections(String username) throws RemoteException;
+  
+  ArrayList<Election> printElectionsWeb(int past) throws RemoteException;
+
+  int updateElectionWeb(Election election) throws RemoteException;
 
   public User getUserByFacebookID(String facebookId) throws RemoteException;
 
