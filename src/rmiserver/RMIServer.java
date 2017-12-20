@@ -452,6 +452,15 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return res;
   }
 
+  public synchronized ArrayList<Election> printElectionsWeb() throws RemoteException {
+    ArrayList<Election> res = new ArrayList<>();
+    for (int i = 0; i < elections.size(); i++) {
+      res.add(elections.get(i));
+    }
+
+    return res;
+  }
+
   private synchronized String printCandidateLists() throws RemoteException {
     String res = "";
     for (int i = 0; i < candidateLists.size(); i++) {

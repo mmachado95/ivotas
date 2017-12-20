@@ -149,4 +149,6 @@ public interface RMIServerInterface extends Remote {
   public ArrayList<CandidateList> getAllCandidateLists() throws  RemoteException;
 
   public ArrayList<String> getValidElections(String username) throws RemoteException;
+
+  ArrayList<Election> printElectionsWeb() throws RemoteException;
 }
