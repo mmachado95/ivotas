@@ -19,8 +19,7 @@
     </s:url>
 
     <p><a href="<s:property value="#electionTag" />">
-            <c:out value="${value.name}" />
-            <c:out value="${value.description}" />
+            <c:out value="${value.name}" /> -> <c:out value="${value.description}" />
     </a>
     </p>
     <br><br>
