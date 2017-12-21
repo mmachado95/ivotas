@@ -18,15 +18,24 @@
 
 <h2>Criar Eleição</h2>
 
-<form action="createElection" method="post">
-    <p>Name</p>
+<form action="createCandidateList" method="post">
+
+    <c:forEach items="${elections}" var="value">
+        <p>
+            <c:out value="${value.name}" />
+            <c:out value="${value.description}" />
+        </p>
+        <br><br>
+    </c:forEach>
+
+    <p>Candidate List Name</p>
     <input type="text" name="name"/>
-    <p>Description</p>
-    <input type="text" name="description"/>
-    <p>Start Date</p>
-    <input type="text" name="startDate" value="dd/MM/yyyy hh:mm:ss"/>
-    <p>End Date</p>
-    <input type="text" name="endDate" value="dd/MM/yyyy hh:mm:ss"/>
+    <p>Election Type</p>
+    <input type="text" name="electionType"/>
+    <p>Users Type (if election Type == 2)</p>
+    <input type="text" name="type"/>
+    <p>Users (separated by ,)</p>
+    <input type="text" name="users" placeholder="Miguel,Teresa,Joao Santos"/>
     <input type="submit"/>
 </form>
 </body>
