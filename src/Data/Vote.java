@@ -7,36 +7,41 @@ public class Vote implements Serializable {
   private Election election;
   private CandidateList candidateList;
   private Department department;
+  private String moment;
 
   public Vote() {}
 
   // blank vote
-  public Vote(User user, Election election, Department department) {
+  public Vote(User user, Election election, Department department, String moment) {
     this.user = user;
     this.election = election;
     this.candidateList = null;
     this.department = department;
+    this.moment = moment;
   }
 
   // vote on list
-  public Vote(User user, Election election, CandidateList candidateList, Department department) {
+  public Vote(User user, Election election, CandidateList candidateList, Department department, String moment) {
     this.user = user;
     this.election = election;
     this.candidateList = candidateList;
     this.department = department;
+    this.moment = moment;
   }
 
   // vote web
-  public Vote(User user, Election election, CandidateList candidateList) {
+  public Vote(User user, Election election, CandidateList candidateList, String moment) {
     this.user = user;
     this.election = election;
     this.candidateList = candidateList;
+    this.moment = moment;
   }
 
   // vote web blank
-  public Vote(User user, Election election) {
+  public Vote(User user, Election election, String moment) {
     this.user = user;
     this.election = election;
+    this.moment = moment;
   }
 
   public User getUser() { return user; }
@@ -56,6 +61,13 @@ public class Vote implements Serializable {
     this.department = department;
   }
 
+  public String getMoment() {
+    return moment;
+  }
+  public void setMoment(String moment) {
+    this.moment = moment;
+  }
+
   @Override
   public String toString() {
     return "Vote{" +
@@ -63,6 +75,7 @@ public class Vote implements Serializable {
             ", election=" + election +
             ", candidateList=" + candidateList +
             ", department=" + department +
+            ", moment='" + moment + '\'' +
             '}';
   }
 }

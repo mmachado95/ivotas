@@ -631,11 +631,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized void vote(User user, Election election, CandidateList candidateList, Department department) throws RemoteException {
     Vote vote;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    Date date = new Date();
+    String moment= simpleDateFormat.format(date);
 
     if (candidateList == null) {
-      vote = new Vote(user, election, department);
+      vote = new Vote(user, election, department, moment);
     } else {
-      vote = new Vote(user, election, candidateList, department);
+      vote = new Vote(user, election, candidateList, department, moment);
     }
 
     this.votes.add(vote);
@@ -684,11 +687,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized void webVote(User user, Election election, CandidateList candidateList) throws RemoteException {
     Vote vote;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    Date date = new Date();
+    String moment = simpleDateFormat.format(date);
 
     if (candidateList == null) {
-      vote = new Vote(user, election);
+      vote = new Vote(user, election, moment);
     } else {
-      vote = new Vote(user, election, candidateList);
+      vote = new Vote(user, election, candidateList, moment);
     }
 
     this.votes.add(vote);

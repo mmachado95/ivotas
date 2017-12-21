@@ -22,6 +22,7 @@
                 Online
             </c:otherwise>
         </c:choose>
+        - ${vote.moment}
     </p>
     <br><br>
 </c:forEach>
