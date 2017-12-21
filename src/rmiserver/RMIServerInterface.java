@@ -150,6 +150,8 @@ public interface RMIServerInterface extends Remote {
 
   public ArrayList<CandidateList> getAllCandidateLists() throws  RemoteException;
 
+  public ArrayList<Election> getAllElections() throws  RemoteException;
+
   public ArrayList<String> getValidElections(String username) throws RemoteException;
   
   ArrayList<Election> printElectionsWeb(int past) throws RemoteException;
@@ -159,4 +161,6 @@ public interface RMIServerInterface extends Remote {
   public User getUserByFacebookID(String facebookId) throws RemoteException;
 
   public void connectFacebookWithUser(String username, String facebookId, String accessToken) throws RemoteException;
+
+  public ArrayList<Vote> getVotesOfUser(User user) throws RemoteException;
 }

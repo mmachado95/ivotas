@@ -783,8 +783,13 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	}
 
   public ArrayList<CandidateList> getAllCandidateLists() throws  RemoteException{
-    System.out.println("Looking up all elections...");
+    System.out.println("Looking up all candidate lists...");
     return this.candidateLists;
+  }
+
+  public ArrayList<Election> getAllElections() throws  RemoteException {
+    System.out.println("Looking up all elections...");
+    return this.elections;
   }
 
 	/* Return current time as timestamp */
@@ -808,7 +813,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	* 3 - Funcionario
 	* */
   public ArrayList<String> getValidElections(String username) throws RemoteException {
-	  User user = this.getUserByName(username);
+    User user = this.getUserByName(username);
     ArrayList<String> electionNames = new ArrayList<>();
     long currentTimestamp = this.getCurrentTimestamp();
 
@@ -849,5 +854,17 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return;
       }
     }
+  }
+
+  public ArrayList<Vote> getVotesOfUser(User user) throws RemoteException {
+    ArrayList<Vote> votesOfUser = new ArrayList<>();
+
+    for (Vote vote : this.votes) {
+      if (vote.getUser().getCc().equals(user.getCc())) {
+        votesOfUser.add(vote);
+      }
+    }
+
+    return votesOfUser;
   }
 }
