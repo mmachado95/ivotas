@@ -45,6 +45,7 @@ public class ChangeElectionAction extends ActionSupport implements SessionAware 
   public String execute() throws ParseException {
     electionObject = this.getIVotasBean().getElectionByName(election);
     setName(electionObject.getName());
+    setDescription(electionObject.getDescription());
 
     setEndDate(Long.toString(electionObject.getEndDate()));
 
@@ -105,8 +106,7 @@ public class ChangeElectionAction extends ActionSupport implements SessionAware 
           addActionError("Can't end election before it started");
         }
       } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println("Rmi exceptions");
+        System.out.println(e.getMessage());
       }
     }
     return INPUT;

@@ -15,10 +15,6 @@ public class ShareElectionAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
-    System.out.println("this was called");
-    System.out.println("this was called");
-    System.out.println("this was called");
-
     // get user that wants to share
     String username = (String) session.get("username");
     User user = this.getIVotasBean().getUserByName(username);

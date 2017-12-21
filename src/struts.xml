@@ -148,6 +148,16 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="success">/WEB-INF/index.jsp</result>
         </action>
 
+        <action name="chooseUser" class="action.ChooseUserAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/choose_user.jsp</result>
+        </action>
+
+        <action name="listPlacesUserVoted" class="action.ListPlacesUserVotedAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/places_user_voted.jsp</result>
+        </action>
+
     </package>
 
 </struts>

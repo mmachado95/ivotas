@@ -6,6 +6,7 @@ package model;
 import Data.CandidateList;
 import Data.Election;
 import Data.User;
+import Data.Vote;
 import rmiserver.RMIServerInterface;
 
 import java.io.*;
@@ -170,13 +171,10 @@ public class IVotasBean {
 
 
   public ArrayList<User> getAllUsers(){
-    System.out.println("Was called");
     ArrayList<User> users = new ArrayList<>();
 
     try {
-      System.out.println("didnt pass");
       users = rmiServer.getAllUsers();
-      System.out.println("pass");
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
     }
@@ -190,7 +188,7 @@ public class IVotasBean {
     try {
       validElections = rmiServer.getValidElections(this.username);
     } catch (RemoteException e) {
-       this.rmiServer = this.connectRMIInterface();
+      this.rmiServer = this.connectRMIInterface();
     }
 
     return validElections;
@@ -288,6 +286,18 @@ public class IVotasBean {
     }
 
     return true;
+  }
+
+  public ArrayList<Vote> getVotesOfUser(User user) {
+    ArrayList<Vote> votes = null;
+
+    try {
+      votes = rmiServer.getVotesOfUser(user);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return votes;
   }
 	
 	public void setUsername(String username) {
