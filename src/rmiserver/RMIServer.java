@@ -239,9 +239,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return 2; // No elections with that name
   }
 
-  public synchronized int updateElectionWeb(Election election) throws RemoteException {
+  public synchronized int updateElectionWeb(String oldName, Election election) throws RemoteException {
     for (int i = 0; i < elections.size(); i++) {
-      if (elections.get(i).getName().equals(election.getName())) {
+      if (elections.get(i).getName().equals(oldName)) {
         if (elections.get(i).getStartDate() < currentTimestamp() && elections.get(i).getEndDate() > currentTimestamp()) { // ElectionAction already started
           return 4;
         }

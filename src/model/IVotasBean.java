@@ -167,18 +167,15 @@ public class IVotasBean {
   }
 
 
-  public int changeElection(Election election) {
+  public int changeElection(String oldName, Election election) {
     int updateElection = 0;
-    System.out.println("com");
 
     try {
-      updateElection = rmiServer.updateElectionWeb(election);
-      System.out.println("massas");
+      updateElection = rmiServer.updateElectionWeb(oldName, election);
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
-      System.out.println("camarao");
     }
-    System.out.println(updateElection);
+
     return updateElection;
   }
 

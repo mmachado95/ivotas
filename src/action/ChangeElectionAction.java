@@ -45,7 +45,6 @@ public class ChangeElectionAction extends ActionSupport implements SessionAware 
   public String execute() throws ParseException {
     if (session.get("electionName") != null) {
       electionObject = this.getIVotasBean().getElectionByName((String) session.get("electionName"));
-      session.remove("electionName");
     } else {
       electionObject = this.getIVotasBean().getElectionByName(election);
       session.put("electionName", election);
@@ -82,14 +81,16 @@ public class ChangeElectionAction extends ActionSupport implements SessionAware 
         long startDateLong = simpleDateFormat.parse(startDate).getTime();
         long endDateLong = simpleDateFormat.parse(endDate).getTime();
 
+        String oldName = electionObject.getName();
         electionObject.setName(name);
         electionObject.setDescription(description);
         electionObject.setStartDate(startDateLong);
-        electionObject.setStartDate(endDateLong);
+        electionObject.setEndDate(endDateLong);
 
-        int createElection = this.getIVotasBean().changeElection(electionObject);
+        int createElection = this.getIVotasBean().changeElection(oldName, electionObject);
 
         if (createElection == 1) {
+          session.remove("electionName");
           return SUCCESS;
         }
         else if (createElection == 3) {
@@ -99,7 +100,7 @@ public class ChangeElectionAction extends ActionSupport implements SessionAware 
           addActionError("Can't end election before it started");
         }
       } catch (Exception e) {
-        System.out.println(e.getMessage());
+        e.printStackTrace();
       }
     } else {
       setName(electionObject.getName());
@@ -116,6 +117,7 @@ public class ChangeElectionAction extends ActionSupport implements SessionAware 
       String dateText2 = simpleDateFormat.format(date2);
       setEndDate(dateText2);
     }
+
     return INPUT;
   }
 
