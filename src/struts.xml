@@ -62,6 +62,13 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="input">/create_election.jsp</result>
         </action>
 
+        <!-- 'create_election_students' action calls 'execute' in 'CreateElectionAction' -->
+        <action name="createElectionStudents" class="action.CreateElectionStudentsAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/create_election_students.jsp</result>
+        </action>
+
         <!-- 'create_candidate_list' action calls 'execute' in 'CreateCandidateListAction' -->
         <action name="createCandidateList" class="action.CreateCandidateListAction" method="execute">
             <interceptor-ref name="defaultStack" />

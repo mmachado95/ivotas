@@ -13,16 +13,17 @@ import java.util.regex.Pattern;
 import java.util.Map;
 
 
-public class CreateElectionAction extends ActionSupport implements SessionAware {
+public class CreateElectionStudentsAction extends ActionSupport implements SessionAware {
   private Map<String, Object> session;
   private String name = null;
   private String description = null;
+  private String department = null;
   private String startDate = null;
   private String endDate = null;
 
-
   private boolean fieldsNotNull() {
     if (name == null &&
+            department == null &&
             description == null &&
             startDate == null &&
             endDate == null) {
@@ -39,12 +40,6 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
 
   @Override
   public String execute() throws ParseException {
-    /*
-    System.out.println(name);
-    System.out.println(description);
-    System.out.println(startDate);
-    System.out.println(endDate);
-    System.out.println(type); */
     if (fieldsNotNull()) {
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
@@ -59,7 +54,10 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
           addActionError("Invalid description Field");
           pass = 0;
         }
-
+        if (department.equals("")) {
+          addActionError("Invalid department Field");
+          pass = 0;
+        }
         if (!checkString(startDate)) {
           addActionError("Invalid start date Field");
           pass = 0;
@@ -75,15 +73,18 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
         long startDateLong = simpleDateFormat.parse(startDate).getTime();
         long endDateLong = simpleDateFormat.parse(endDate).getTime();
 
-        int createElection = this.getIVotasBean().createElection(name, description, startDateLong, endDateLong, 1);
+        int createElection = this.getIVotasBean().createElectionStudents(name, description, startDateLong, endDateLong, 2, department);
 
         if (createElection == 1) {
           return SUCCESS;
         }
         else if (createElection == 2) {
-          addActionError("Start date has to be before end date");
+          addActionError("There isn't a department with that name");
         }
         else if (createElection == 3) {
+          addActionError("Start date has to be before end date");
+        }
+        else if (createElection == 4) {
           addActionError("You can't create an election in the past");
         }
       } catch (Exception e) {
@@ -124,6 +125,14 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
 
   public String getDescription() {
     return description;
+  }
+
+  public String getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(String department) {
+    this.department = department;
   }
 
   public void setStartDate(String startDate) {

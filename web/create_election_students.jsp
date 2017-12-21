@@ -18,11 +18,13 @@
 
 <h2>Criar Eleição</h2>
 
-<form action="createElection" method="post">
+<form action="createElectionStudents" method="post">
     <p>Name</p>
     <input type="text" name="name"/>
     <p>Description</p>
     <input type="text" name="description"/>
+    <p>Department:</p>
+    <input type="text" name="department"/>
     <p>Start Date</p>
     <input type="text" name="startDate" value="dd/MM/yyyy hh:mm:ss"/>
     <p>End Date</p>
