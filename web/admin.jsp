@@ -53,7 +53,7 @@
 <body>
     <a href="<s:url action="registerPerson" />">Registar Pessoa</a> <br><br>
     <a href="choose_type_election.jsp">Criar Eleição</a> <br><br>
-    <a href="<s:url action="createCandidateList" />">Criar Lista de Candidatos</a> <br><br>
+    <a href="<s:url action="chooseCandidateListElection" />">Criar Lista de Candidatos</a> <br><br>
     <a href="<s:url action="listElections" />" >Listar Eleições e Detalhes</a> <br><br>
     <a href="<s:url action="createVotingTable" />">Adicionar Mesa de Voto</a> <br><br>
     <a href="<s:url action="chooseElectionToChange" />" >Alterar Propriedades de Eleição</a> <br><br>

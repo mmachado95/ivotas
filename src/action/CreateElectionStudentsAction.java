@@ -73,7 +73,7 @@ public class CreateElectionStudentsAction extends ActionSupport implements Sessi
         long startDateLong = simpleDateFormat.parse(startDate).getTime();
         long endDateLong = simpleDateFormat.parse(endDate).getTime();
 
-        int createElection = this.getIVotasBean().createElectionStudents(name, description, startDateLong, endDateLong, 2, department);
+        int createElection = this.getIVotasBean().createElectionStudents(name, description, startDateLong, endDateLong, 1, department);
 
         if (createElection == 1) {
           return SUCCESS;

@@ -75,7 +75,7 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
         long startDateLong = simpleDateFormat.parse(startDate).getTime();
         long endDateLong = simpleDateFormat.parse(endDate).getTime();
 
-        int createElection = this.getIVotasBean().createElection(name, description, startDateLong, endDateLong, 1);
+        int createElection = this.getIVotasBean().createElection(name, description, startDateLong, endDateLong, 2);
 
         if (createElection == 1) {
           return SUCCESS;

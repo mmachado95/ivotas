@@ -16,27 +16,29 @@
     <s:actionmessage/>
 </s:if>
 
-<h2>Criar Eleição</h2>
+<h2>Criar Lista de Candidatos</h2>
 
-<form action="createCandidateList" method="post">
+<c:if test="${electionType == 1}">
+    <form action="createCandidateList" method="post">
+        <p>Candidate List Name</p>
+        <input type="text" name="name"/>
+        <p>Users (separated by ,)</p>
+        <input type="text" name="users" placeholder="Miguel,Teresa,Joao Santos"/>
+        <input type="submit"/>
+    </form>
+</c:if>
 
-    <c:forEach items="${elections}" var="value">
-        <p>
-            <c:out value="${value.name}" />
-            <c:out value="${value.description}" />
-        </p>
-        <br><br>
-    </c:forEach>
+<c:if test="${electionType == 2}">
+    <form action="createCandidateList" method="post">
+        <p>Candidate List Name</p>
+        <input type="text" name="name"/>
+        <p>Users Type</p>
+        <input type="text" name="type"/>
+        <p>Users (separated by ,)</p>
+        <input type="text" name="users" placeholder="Miguel,Teresa,Joao Santos"/>
+        <input type="submit"/>
+    </form>
+</c:if>
 
-    <p>Candidate List Name</p>
-    <input type="text" name="name"/>
-    <p>Election Type</p>
-    <input type="text" name="electionType"/>
-    <p>Users Type (if election Type == 2)</p>
-    <input type="text" name="type"/>
-    <p>Users (separated by ,)</p>
-    <input type="text" name="users" placeholder="Miguel,Teresa,Joao Santos"/>
-    <input type="submit"/>
-</form>
 </body>
 </html>
