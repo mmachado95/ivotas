@@ -5,6 +5,7 @@ package model;
 
 import Data.CandidateList;
 import Data.Election;
+import Data.ElectionResult;
 import Data.User;
 import rmiserver.RMIServerInterface;
 
@@ -166,6 +167,18 @@ public class IVotasBean {
     }
 
     return elections;
+  }
+
+  public ElectionResult detailsOfPastElections(String electionName) {
+    ElectionResult res = null;
+
+    try {
+      res = rmiServer.detailsOfPastElectionsWeb(electionName);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return res;
   }
 
 
