@@ -85,6 +85,8 @@ public interface RMIServerInterface extends Remote {
    * number and percentage of blank votes and number and percentage of null votes */
   String detailsOfPastElections() throws RemoteException;
 
+  ElectionResult detailsOfPastElectionsWeb(String electionName) throws RemoteException;
+
   /** Returns user given a username
    * If there isn't a user with the name username returns null */
   User getUserByName(String userName) throws RemoteException;

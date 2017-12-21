@@ -334,6 +334,42 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return res;
   }
 
+  public synchronized ElectionResult detailsOfPastElectionsWeb(String electionName) throws RemoteException {
+    Election election = getElectionByName(electionName);
+
+    String res = "";
+
+    ArrayList<Vote> electionVotes = this.votesOfElection(election);
+    int numberOfVotes = electionVotes.size();
+    ArrayList<CandidateResults> candidatesResults = new ArrayList<>();
+
+    for (CandidateList candidateList : election.getCandidateLists()) {
+      CandidateResults candidateResults = new CandidateResults(candidateList, 0, 0);
+      candidatesResults.add(candidateResults);
+    }
+
+    int blankVotes = 0;
+    for (Vote vote : electionVotes) {
+      if (vote.getCandidateList() == null) {
+        blankVotes++;
+      }
+      for (CandidateResults candidateResults : candidatesResults) {
+        if (vote.getCandidateList() != null) {
+          if (vote.getCandidateList().getName().equals(candidateResults.getCandidateList().getName())) {
+            candidateResults.setNumberOfVotes(candidateResults.getNumberOfVotes() + 1);
+            float percentage = ((float)candidateResults.getNumberOfVotes() / numberOfVotes) * 100;
+            candidateResults.setPercentage(Math.round(percentage));
+          }
+        }
+      }
+    }
+
+    float percentageOfBlankVotes = ((float) blankVotes / electionVotes.size()) * 100.0f;
+    ElectionResult electionResult = new ElectionResult(
+            election, candidatesResults, blankVotes, (Math.round(percentageOfBlankVotes)), 0, 0);
+    return electionResult;
+  }
+
   private synchronized ArrayList<Vote> votesOfElection(Election election) {
     ArrayList<Vote> votes = new ArrayList<>();
 
