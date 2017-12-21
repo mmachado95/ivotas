@@ -93,6 +93,22 @@ public class IVotasBean {
     return createUser;
   }
 
+  public void createCandidateList(String name, ArrayList<User> users, Election election) {
+    try {
+      rmiServer.createCandidateList(name, users, election);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+  }
+
+  public void createCandidateListCouncil(String name, ArrayList<User> users, Election election, int usersType) {
+    try {
+      rmiServer.createCandidateListCouncil(name, users, election, usersType);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+  }
+
   public int createElection(String name, String description, long startDate, long endDate, int type) {
     int createElection = 0;
 
