@@ -237,16 +237,15 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
   public synchronized int updateElectionWeb(Election election) throws RemoteException {
     for (int i = 0; i < elections.size(); i++) {
       if (elections.get(i).getName().equals(election.getName())) {
-        System.out.println("oi");
-        if (elections.get(i).getStartDate() < currentTimestamp()) // ElectionAction already started
+        if (elections.get(i).getStartDate() < currentTimestamp() && elections.get(i).getEndDate() > currentTimestamp()) { // ElectionAction already started
           return 4;
-        if (election.getStartDate() >= election.getEndDate()) // Cant end election before it started
+        }
+        if (election.getStartDate() >= election.getEndDate()) { // Cant end election before it started
           return 3;
+        }
         elections.set(i, election);
-        System.out.println("hey");
 
         updateFile(this.elections, "Elections");
-        System.out.println("okay");
         return 1;
       }
     }
