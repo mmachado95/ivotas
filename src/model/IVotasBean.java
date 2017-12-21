@@ -3,9 +3,7 @@
  */
 package model;
 
-import Data.CandidateList;
-import Data.Election;
-import Data.User;
+import Data.*;
 import rmiserver.RMIServerInterface;
 
 import java.io.*;
@@ -79,15 +77,138 @@ public class IVotasBean {
     return rmi;
   }
 
+  public int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) {
+    int createUser = 0;
+
+    try {
+      createUser = rmiServer.createUser(name, password, departmentName, facultyName, contact, address, cc, expireDate, type);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return createUser;
+  }
+
+  public void createCandidateList(String name, ArrayList<User> users, Election election) {
+    try {
+      rmiServer.createCandidateList(name, users, election);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+  }
+
+  public void createCandidateListCouncil(String name, ArrayList<User> users, Election election, int usersType) {
+    try {
+      rmiServer.createCandidateListCouncil(name, users, election, usersType);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+  }
+
+  public int createElection(String name, String description, long startDate, long endDate, int type) {
+    int createElection = 0;
+
+    try {
+      createElection = rmiServer.createElection(name, description, startDate, endDate, type);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return createElection;
+  }
+
+  public int createElectionStudents(String name, String description, long startDate, long endDate, int type, String department) {
+    int createElection = 0;
+
+    try {
+      createElection = rmiServer.createStudentsElection(name, description, startDate, endDate, type, department);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return createElection;
+  }
+
+  public int createVotingTable(String electionName, String departmentName) {
+    int createVotingTable = 0;
+
+    try {
+      createVotingTable = rmiServer.createVotingTable(electionName, departmentName);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    System.out.println(createVotingTable);
+    return createVotingTable;
+  }
+
+  public ArrayList<Election> listElections() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(0);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
+  public ArrayList<Election> chooseElectionToChange() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(1);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
+
+  public int changeElection(String oldName, Election election) {
+    int updateElection = 0;
+
+    try {
+      updateElection = rmiServer.updateElectionWeb(oldName, election);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return updateElection;
+  }
+
+  public ArrayList<Election> choosePastElections() {
+    ArrayList<Election> elections = new ArrayList<>();
+
+    try {
+      elections = rmiServer.printElectionsWeb(2);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return elections;
+  }
+
+  public ElectionResult detailsOfPastElections(String electionName) {
+    ElectionResult res = null;
+
+    try {
+      res = rmiServer.detailsOfPastElectionsWeb(electionName);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return res;
+  }
+
 
   public ArrayList<User> getAllUsers(){
-    System.out.println("Was called");
     ArrayList<User> users = new ArrayList<>();
 
     try {
-      System.out.println("didnt pass");
       users = rmiServer.getAllUsers();
-      System.out.println("pass");
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
     }
@@ -101,7 +222,7 @@ public class IVotasBean {
     try {
       validElections = rmiServer.getValidElections(this.username);
     } catch (RemoteException e) {
-       this.rmiServer = this.connectRMIInterface();
+      this.rmiServer = this.connectRMIInterface();
     }
 
     return validElections;
@@ -199,6 +320,18 @@ public class IVotasBean {
     }
 
     return true;
+  }
+
+  public ArrayList<Vote> getVotesOfUser(User user) {
+    ArrayList<Vote> votes = null;
+
+    try {
+      votes = rmiServer.getVotesOfUser(user);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return votes;
   }
 	
 	public void setUsername(String username) {

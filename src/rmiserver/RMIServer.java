@@ -75,14 +75,17 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) throws RemoteException {
     Department department = getDepartmentByName(departmentName);
-    if (department == null)
+    if (department == null) {
       return 2;
+    }
 
     Faculty faculty = getFacultyByName(facultyName);
-    if (faculty == null)
+    if (faculty == null) {
       return 3;
+    }
 
     User user = new User(name, password, department, faculty, contact, address, cc, expireDate, type);
+
     this.users.add(user);
     updateFile(this.users, "Users");
     return 1;
@@ -109,25 +112,34 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized int createElection(String name, String description, long startDate, long endDate, int type) throws RemoteException {
     if (startDate < currentTimestamp()) {
+      return 3;
+    }
+    if (startDate > endDate) {
       return 2;
     }
     Election election = new Election(name, description, startDate, endDate, type);
     this.elections.add(election);
     this.updateFile(this.elections, "Elections");
+    System.out.println("Conselho Geral");
+    System.out.println(elections.get(elections.size() - 1));
     return 1;
   }
 
   public synchronized int createStudentsElection(String name, String description, long startDate, long endDate, int type, String departmentName) throws RemoteException {
-    if (startDate < currentTimestamp()) {
+    if (startDate < currentTimestamp())
+      return 4;
+    if (startDate > endDate)
       return 3;
-    }
+    System.out.println(departmentName);
     Department department = getDepartmentByName(departmentName);
-    if (department == null) {
+    System.out.println(department);
+    if (department == null)
       return 2;
-    }
     Election election = new Election(name, description, startDate, endDate, type, department);
     this.elections.add(election);
     this.updateFile(this.elections, "Elections");
+    System.out.println("Nucleo");
+    System.out.println(elections.get(elections.size() - 1));
     return 1;
   }
 
@@ -227,6 +239,24 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return 2; // No elections with that name
   }
 
+  public synchronized int updateElectionWeb(String oldName, Election election) throws RemoteException {
+    for (int i = 0; i < elections.size(); i++) {
+      if (elections.get(i).getName().equals(oldName)) {
+        if (elections.get(i).getStartDate() < currentTimestamp() && elections.get(i).getEndDate() > currentTimestamp()) { // ElectionAction already started
+          return 4;
+        }
+        if (election.getStartDate() >= election.getEndDate()) { // Cant end election before it started
+          return 3;
+        }
+        elections.set(i, election);
+
+        updateFile(this.elections, "Elections");
+        return 1;
+      }
+    }
+    return 2; // No elections with that name
+  }
+
   public synchronized void removeDepartment(Department department) throws RemoteException {
     for (int i = 0; i < departments.size(); i++) {
       if (departments.get(i).getName().equals(department.getName())) {
@@ -306,6 +336,42 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
       }
     }
     return res;
+  }
+
+  public synchronized ElectionResult detailsOfPastElectionsWeb(String electionName) throws RemoteException {
+    Election election = getElectionByName(electionName);
+
+    String res = "";
+
+    ArrayList<Vote> electionVotes = this.votesOfElection(election);
+    int numberOfVotes = electionVotes.size();
+    ArrayList<CandidateResults> candidatesResults = new ArrayList<>();
+
+    for (CandidateList candidateList : election.getCandidateLists()) {
+      CandidateResults candidateResults = new CandidateResults(candidateList, 0, 0);
+      candidatesResults.add(candidateResults);
+    }
+
+    int blankVotes = 0;
+    for (Vote vote : electionVotes) {
+      if (vote.getCandidateList() == null) {
+        blankVotes++;
+      }
+      for (CandidateResults candidateResults : candidatesResults) {
+        if (vote.getCandidateList() != null) {
+          if (vote.getCandidateList().getName().equals(candidateResults.getCandidateList().getName())) {
+            candidateResults.setNumberOfVotes(candidateResults.getNumberOfVotes() + 1);
+            float percentage = ((float)candidateResults.getNumberOfVotes() / numberOfVotes) * 100;
+            candidateResults.setPercentage(Math.round(percentage));
+          }
+        }
+      }
+    }
+
+    float percentageOfBlankVotes = ((float) blankVotes / electionVotes.size()) * 100.0f;
+    ElectionResult electionResult = new ElectionResult(
+            election, candidatesResults, blankVotes, (Math.round(percentageOfBlankVotes)), 0, 0);
+    return electionResult;
   }
 
   private synchronized ArrayList<Vote> votesOfElection(Election election) {
@@ -445,6 +511,17 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     return res;
   }
 
+
+  public synchronized ArrayList<Election> printElectionsWeb(int future) throws RemoteException {
+    ArrayList<Election> res = new ArrayList<>();
+    for (int i = 0; i < elections.size(); i++) {
+      if (future == 0 || (future == 1 && elections.get(i).getEndDate() > currentTimestamp()) || (future == 2 && elections.get(i).getEndDate() < currentTimestamp()))
+      res.add(elections.get(i));
+    }
+
+    return res;
+  }
+
   private synchronized String printCandidateLists() throws RemoteException {
     String res = "";
     for (int i = 0; i < candidateLists.size(); i++) {
@@ -554,11 +631,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized void vote(User user, Election election, CandidateList candidateList, Department department) throws RemoteException {
     Vote vote;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    Date date = new Date();
+    String moment= simpleDateFormat.format(date);
 
     if (candidateList == null) {
-      vote = new Vote(user, election, department);
+      vote = new Vote(user, election, department, moment);
     } else {
-      vote = new Vote(user, election, candidateList, department);
+      vote = new Vote(user, election, candidateList, department, moment);
     }
 
     this.votes.add(vote);
@@ -607,11 +687,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
   public synchronized void webVote(User user, Election election, CandidateList candidateList) throws RemoteException {
     Vote vote;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    Date date = new Date();
+    String moment = simpleDateFormat.format(date);
 
     if (candidateList == null) {
-      vote = new Vote(user, election);
+      vote = new Vote(user, election, moment);
     } else {
-      vote = new Vote(user, election, candidateList);
+      vote = new Vote(user, election, candidateList, moment);
     }
 
     this.votes.add(vote);
@@ -710,8 +793,13 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	}
 
   public ArrayList<CandidateList> getAllCandidateLists() throws  RemoteException{
-    System.out.println("Looking up all elections...");
+    System.out.println("Looking up all candidate lists...");
     return this.candidateLists;
+  }
+
+  public ArrayList<Election> getAllElections() throws  RemoteException {
+    System.out.println("Looking up all elections...");
+    return this.elections;
   }
 
 	/* Return current time as timestamp */
@@ -735,7 +823,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	* 3 - Funcionario
 	* */
   public ArrayList<String> getValidElections(String username) throws RemoteException {
-	  User user = this.getUserByName(username);
+    User user = this.getUserByName(username);
     ArrayList<String> electionNames = new ArrayList<>();
     long currentTimestamp = this.getCurrentTimestamp();
 
@@ -776,5 +864,17 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         return;
       }
     }
+  }
+
+  public ArrayList<Vote> getVotesOfUser(User user) throws RemoteException {
+    ArrayList<Vote> votesOfUser = new ArrayList<>();
+
+    for (Vote vote : this.votes) {
+      if (vote.getUser().getCc().equals(user.getCc())) {
+        votesOfUser.add(vote);
+      }
+    }
+
+    return votesOfUser;
   }
 }

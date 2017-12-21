@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FileWrapper {
 
@@ -134,11 +135,11 @@ public class FileWrapper {
     long endDate3 = 0;
     try {
       startDate = simpleDateFormat.parse("28/10/2017 13:35:00").getTime();
-      endDate = simpleDateFormat.parse("20/12/2017 15:20:00").getTime();
+      endDate = simpleDateFormat.parse("23/12/2017 15:20:00").getTime();
       startDate2 = simpleDateFormat.parse("10/04/2017 09:30:00").getTime();
       endDate2 = simpleDateFormat.parse("17/04/2017 19:00:00").getTime();
-      startDate3 = simpleDateFormat.parse("02/03/2017 10:30:00").getTime();
-      endDate3 = simpleDateFormat.parse("09/02/2017 19:00:00").getTime();
+      startDate3 = simpleDateFormat.parse("02/03/2018 10:30:00").getTime();
+      endDate3 = simpleDateFormat.parse("09/05/2018 19:00:00").getTime();
     }
     catch (ParseException e) {
       e.printStackTrace();
@@ -247,36 +248,39 @@ public class FileWrapper {
     votingTables.add(votingTable4);
 
     // -------------VOTOS----------------
+    simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    Date date = new Date();
+    String moment= simpleDateFormat.format(date);
     ArrayList<Vote> votes = new ArrayList<>();
     // Estudantes conselho geral
-    Vote vote1 = new Vote(user1, election2, candidateList4, department1);
-    Vote vote2 = new Vote(user2, election2, candidateList4, department1);
-    Vote vote3 = new Vote(user3, election2, candidateList4, department1);
-    Vote vote4 = new Vote(user4, election2, candidateList4, department1);
-    Vote vote5 = new Vote(user5, election2, department1);
-    Vote vote7 = new Vote(user11, election2, candidateList3, department3);
-    Vote vote8 = new Vote(user12, election2, candidateList3, department3);
-    Vote vote9 = new Vote(user17, election2, candidateList3, department4);
+    Vote vote1 = new Vote(user1, election2, candidateList4, department1, moment);
+    Vote vote2 = new Vote(user2, election2, candidateList4, department1, moment);
+    Vote vote3 = new Vote(user3, election2, candidateList4, department1, moment);
+    Vote vote4 = new Vote(user4, election2, candidateList4, department1, moment);
+    Vote vote5 = new Vote(user5, election2, department1, moment);
+    Vote vote7 = new Vote(user11, election2, candidateList3, department3, moment);
+    Vote vote8 = new Vote(user12, election2, candidateList3, department3, moment);
+    Vote vote9 = new Vote(user17, election2, candidateList3, department4, moment);
 
     // Professores conselho geral
-    Vote vote10 = new Vote(user6, election2, candidateList5, department1);
-    Vote vote11 = new Vote(user8, election2, candidateList5, department2);
-    Vote vote12 = new Vote(user13, election2, candidateList6, department3);
-    Vote vote13 = new Vote(user14, election2, candidateList5, department3);
-    Vote vote14 = new Vote(user18, election2, department4);
+    Vote vote10 = new Vote(user6, election2, candidateList5, department1, moment);
+    Vote vote11 = new Vote(user8, election2, candidateList5, department2, moment);
+    Vote vote12 = new Vote(user13, election2, candidateList6, department3, moment);
+    Vote vote13 = new Vote(user14, election2, candidateList5, department3, moment);
+    Vote vote14 = new Vote(user18, election2, department4, moment);
 
     // Funcionarios conselho geral
-    Vote vote15 = new Vote(user9, election2, candidateList8, department2);
-    Vote vote16 = new Vote(user10, election2, candidateList7, department2);
-    Vote vote17 = new Vote(user15, election2, candidateList7, department3);
-    Vote vote18 = new Vote(user16, election2, candidateList7, department4);
-    Vote vote19 = new Vote(user19, election2, department4);
+    Vote vote15 = new Vote(user9, election2, candidateList8, department2, moment);
+    Vote vote16 = new Vote(user10, election2, candidateList7, department2, moment);
+    Vote vote17 = new Vote(user15, election2, candidateList7, department3, moment);
+    Vote vote18 = new Vote(user16, election2, candidateList7, department4, moment);
+    Vote vote19 = new Vote(user19, election2, department4, moment);
 
     // Estudantes NEG
-    Vote vote20 = new Vote(user11, election3, candidateList9, department3);
-    Vote vote21 = new Vote(user12, election3, candidateList10, department3);
-    Vote vote22 = new Vote(user27, election3, candidateList9, department3);
-    Vote vote23 = new Vote(user28, election3, department4);
+    Vote vote20 = new Vote(user11, election3, candidateList9, department3, moment);
+    Vote vote21 = new Vote(user12, election3, candidateList10, department3, moment);
+    Vote vote22 = new Vote(user27, election3, candidateList9, department3, moment);
+    Vote vote23 = new Vote(user28, election3, department4, moment);
 
 
     votes.add(vote1);

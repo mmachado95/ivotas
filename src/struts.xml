@@ -12,6 +12,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
     <!-- devMode equals debug information and reload everything for every request -->
     <constant name="struts.devMode" value="false" />
     <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.action.excludePattern" value="/ws"/>
 
     <package name="ivotas" extends="struts-default">
         <interceptors>
@@ -31,8 +32,6 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="input">/login.jsp</result>
         </global-results>
 
-
-
         <!-- all exceptions not caught by the application will lead to error.jsp -->
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="error" />
@@ -41,6 +40,84 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <!-- 'index' action leads to the view provided by login.jsp -->
         <action name="index">
             <result>/WEB-INF/index.jsp</result>
+        </action>
+
+        <!-- 'admin' action calls 'execute' in 'AdminAction' -->
+        <action name="admin" class="action.AdminAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+        </action>
+
+        <!-- 'register_person' action calls 'execute' in 'RegisterPersonAction' -->
+        <action name="registerPerson" class="action.RegisterPersonAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/register_person.jsp</result>
+        </action>
+
+        <!-- 'create_election' action calls 'execute' in 'CreateElectionAction' -->
+        <action name="createElection" class="action.CreateElectionAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/create_election.jsp</result>
+        </action>
+
+        <!-- 'create_election_students' action calls 'execute' in 'CreateElectionAction' -->
+        <action name="createElectionStudents" class="action.CreateElectionStudentsAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/create_election_students.jsp</result>
+        </action>
+
+        <!-- 'choose_candidate_list_election' action calls 'execute' in 'ChooseCandidateListElectionAction' -->
+        <action name="chooseCandidateListElection" class="action.ChooseCandidateListElectionAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/choose_candidate_list_election.jsp</result>
+        </action>
+
+        <!-- 'create_candidate_list' action calls 'execute' in 'CreateCandidateListAction' -->
+        <action name="createCandidateList" class="action.CreateCandidateListAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/create_candidate_list.jsp</result>
+        </action>
+
+        <!-- 'create_voting_table' action calls 'execute' in 'CreateElectionAction' -->
+        <action name="createVotingTable" class="action.CreateVotingTableAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/create_voting_table.jsp</result>
+        </action>
+
+        <!-- 'list_elections' action calls 'execute' in 'LisElectionsAction' -->
+        <action name="listElections" class="action.ListElectionsAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/list_elections.jsp</result>
+        </action>
+
+        <!-- 'choose_election_to_change' action calls 'execute' in 'ChooseElectionToChangeAction' -->
+        <action name="chooseElectionToChange" class="action.ChooseElectionToChangeAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/choose_election_to_change.jsp</result>
+        </action>
+
+        <!-- 'change_election' action calls 'execute' in 'ChangeElectionAction' -->
+        <action name="changeElection" class="action.ChangeElectionAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/admin.jsp</result>
+            <result name="input">/change_election.jsp</result>
+        </action>
+
+        <!-- 'choose_past_elections' action calls 'execute' in 'ChoosePastElectionsAction' -->
+        <action name="choosePastElections" class="action.ChoosePastElectionsAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/choose_past_elections.jsp</result>
+        </action>
+
+        <!-- 'details_of_past_elections' action calls 'execute' in 'DetailsOfPastElectionsAction' -->
+        <action name="detailsOfPastElections" class="action.DetailsOfPastElectionsAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/details_of_past_elections.jsp</result>
         </action>
 
         <!-- 'login' action calls 'execute' in 'LoginAction' -->
@@ -87,6 +164,16 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 
         <action name="shareElection" class="action.facebook.ShareElectionAction" method="execute">
             <result name="success">/WEB-INF/index.jsp</result>
+        </action>
+
+        <action name="chooseUser" class="action.ChooseUserAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/choose_user.jsp</result>
+        </action>
+
+        <action name="listPlacesUserVoted" class="action.ListPlacesUserVotedAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/places_user_voted.jsp</result>
         </action>
 
     </package>

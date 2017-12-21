@@ -85,6 +85,8 @@ public interface RMIServerInterface extends Remote {
    * number and percentage of blank votes and number and percentage of null votes */
   String detailsOfPastElections() throws RemoteException;
 
+  ElectionResult detailsOfPastElectionsWeb(String electionName) throws RemoteException;
+
   /** Returns user given a username
    * If there isn't a user with the name username returns null */
   User getUserByName(String userName) throws RemoteException;
@@ -135,7 +137,7 @@ public interface RMIServerInterface extends Remote {
   /** Return true if vote is valid and false otherwise. */
   boolean webVoteIsValid(User user, Election election, CandidateList candidateList) throws RemoteException;
 
- void subscribe(AdminInterface c) throws RemoteException;
+  void subscribe(AdminInterface c) throws RemoteException;
 
   void unsubscribe(AdminInterface c) throws RemoteException;
 
@@ -148,9 +150,17 @@ public interface RMIServerInterface extends Remote {
 
   public ArrayList<CandidateList> getAllCandidateLists() throws  RemoteException;
 
+  public ArrayList<Election> getAllElections() throws  RemoteException;
+
   public ArrayList<String> getValidElections(String username) throws RemoteException;
+  
+  ArrayList<Election> printElectionsWeb(int past) throws RemoteException;
+
+  int updateElectionWeb(String oldName, Election election) throws RemoteException;
 
   public User getUserByFacebookID(String facebookId) throws RemoteException;
 
   public void connectFacebookWithUser(String username, String facebookId, String accessToken) throws RemoteException;
+
+  public ArrayList<Vote> getVotesOfUser(User user) throws RemoteException;
 }
