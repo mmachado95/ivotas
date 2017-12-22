@@ -6,9 +6,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Hey!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <title>iVotas</title>
 </head>
 <body>
+
+<div style="margin-top: 5%">
+    <h1 class="text-center">iVotas</h1>
+    <h2 class="text-center">Mesa de voto</h2>
+</div>
 
 <c:forEach items="${candidateLists}" var="candidateList">
     <s:url action="createVote" var="voteTag" >

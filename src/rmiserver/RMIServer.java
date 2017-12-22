@@ -515,7 +515,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
   public synchronized ArrayList<Election> printElectionsWeb(int future) throws RemoteException {
     ArrayList<Election> res = new ArrayList<>();
     for (int i = 0; i < elections.size(); i++) {
-      if (future == 0 || (future == 1 && elections.get(i).getEndDate() > currentTimestamp()) || (future == 2 && elections.get(i).getEndDate() < currentTimestamp()))
+      if (future == 0 || (future == 1 && elections.get(i).getStartDate() > currentTimestamp()) || (future == 2 && elections.get(i).getEndDate() < currentTimestamp()))
       res.add(elections.get(i));
     }
 
