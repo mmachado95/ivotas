@@ -14,7 +14,7 @@ public class ChooseElectionToChangeAction extends ActionSupport implements Sessi
 
   @Override
   public String execute() {
-    elections = this.getIVotasBean().choosePastElections();
+    elections = this.getIVotasBean().chooseElectionToChange();
     return SUCCESS;
   }
 
