@@ -16,19 +16,27 @@
     <h2 class="text-center">Mesa de voto</h2>
 </div>
 
-<c:forEach items="${candidateLists}" var="candidateList">
+<div class="container" style="margin-top: 5%">
+    <c:forEach items="${candidateLists}" var="candidateList">
+        <s:url action="createVote" var="voteTag" >
+            <s:param name="listName"><c:out value="${candidateList.name}" /></s:param>
+        </s:url>
+        <a href="<s:property value="#voteTag" />&electionName=${electionName}" >
+            <button class="btn btn-primary"><c:out value="${candidateList.name}" /></button>
+            <br><br>
+        </a>
+    </c:forEach>
+
     <s:url action="createVote" var="voteTag" >
-        <s:param name="listName"><c:out value="${candidateList.name}" /></s:param>
+        <s:param name="listName"><c:out value="blank" /></s:param>
     </s:url>
-    <p><a href="<s:property value="#voteTag" />&electionName=${electionName}" ><c:out value="${candidateList.name}" /></a></p><br>
-</c:forEach>
+    <a href="<s:property value="#voteTag" />&electionName=${electionName}" >
+        <button class="btn btn-primary">Branco</button>
+    </a>
+    <br>
+</div>
 
-<s:url action="createVote" var="voteTag" >
-    <s:param name="listName"><c:out value="blank" /></s:param>
-</s:url>
-<p><a href="<s:property value="#voteTag" />&electionName=${electionName}" >Branco</a></p><br>
-
-
-<p><a href="<s:url action="index" />">Voltar</a></p><br>
+<br><br>
+<a href="<s:url action="index" />"><button class="btn btn-secondary" style="margin-left: 2%">Voltar</button></a>
 </body>
 </html>

@@ -6,19 +6,17 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>iVotas</title>
-</head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <title>iVotas</title></head>
 <body>
-<s:if test="hasActionErrors()">
-    <s:actionerror/>
-</s:if>
-<s:if test="hasActionMessages()">
-    <s:actionmessage/>
-</s:if>
 
-<h2>Alterar Eleição</h2>
+<div style="margin-top: 5%">
+    <h1 class="text-center">iVotas</h1>
+    <h2 class="text-center">Administração</h2>
+    <h4 class="text-center">Alterar Eleição</h4>
+</div>
 
-<form action="changeElection" method="post">
+<form action="changeElection" method="post" style="margin: 5%">
     <p>Name</p>
     <input type="text" name="name" value="${name}"/>
     <p>Description</p>
@@ -29,5 +27,17 @@
     <input type="text" name="endDate" value="${endDate}"/>
     <input type="submit"/>
 </form>
+
+<s:if test="hasActionErrors()">
+    <s:actionerror/>
+</s:if>
+<s:if test="hasActionMessages()">
+    <s:actionmessage/>
+</s:if>
+
+<div class="col-md-2 text-center" style="margin-top:3%">
+    <a href="<s:url action="admin" />" class="text-center"><button type="button" class="btn btn-secondary" style="margin-left: 2%">Voltar</button></a>
+</div>
+
 </body>
 </html>
