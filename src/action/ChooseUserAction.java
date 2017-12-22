@@ -15,6 +15,9 @@ public class ChooseUserAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
     users = this.getIVotasBean().getAllUsers();
     return SUCCESS;
   }

@@ -27,6 +27,10 @@ public class CreateVotingTableAction extends ActionSupport implements SessionAwa
 
   @Override
   public String execute() {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     if (fieldsNotNull()) {
       try {
         int pass = 1;

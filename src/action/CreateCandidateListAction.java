@@ -37,6 +37,9 @@ public class CreateCandidateListAction extends ActionSupport implements SessionA
 
   @Override
   public String execute() throws ParseException {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
 
     if (electionName != null) {
       Election election = this.getIVotasBean().getElectionByName(electionName);

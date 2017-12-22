@@ -14,6 +14,10 @@ public class ChooseElectionToChangeAction extends ActionSupport implements Sessi
 
   @Override
   public String execute() {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     elections = this.getIVotasBean().chooseElectionToChange();
     return SUCCESS;
   }

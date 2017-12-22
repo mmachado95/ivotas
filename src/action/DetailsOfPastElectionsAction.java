@@ -33,6 +33,10 @@ public class DetailsOfPastElectionsAction extends ActionSupport implements Sessi
 
   @Override
   public String execute() throws ParseException {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     electionObject = this.getIVotasBean().getElectionByName(election);
     details = this.getIVotasBean().detailsOfPastElections(election);
     setDetails(details);

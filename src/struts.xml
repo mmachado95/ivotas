@@ -53,6 +53,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <action name="loggedAdmin" class="action.AdminAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'register_person' action calls 'execute' in 'RegisterPersonAction' -->
@@ -60,6 +61,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
             <result name="input">/register_person.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'create_election' action calls 'execute' in 'CreateElectionAction' -->
@@ -67,6 +69,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
             <result name="input">/create_election.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'create_election_students' action calls 'execute' in 'CreateElectionAction' -->
@@ -74,12 +77,14 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
             <result name="input">/create_election_students.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'choose_candidate_list_election' action calls 'execute' in 'ChooseCandidateListElectionAction' -->
         <action name="chooseCandidateListElection" class="action.ChooseCandidateListElectionAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/choose_candidate_list_election.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'create_candidate_list' action calls 'execute' in 'CreateCandidateListAction' -->
@@ -87,6 +92,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
             <result name="input">/create_candidate_list.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'create_voting_table' action calls 'execute' in 'CreateElectionAction' -->
@@ -94,18 +100,21 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
             <result name="input">/create_voting_table.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'list_elections' action calls 'execute' in 'LisElectionsAction' -->
         <action name="listElections" class="action.ListElectionsAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/list_elections.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'choose_election_to_change' action calls 'execute' in 'ChooseElectionToChangeAction' -->
         <action name="chooseElectionToChange" class="action.ChooseElectionToChangeAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/choose_election_to_change.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'change_election' action calls 'execute' in 'ChangeElectionAction' -->
@@ -113,18 +122,21 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
             <result name="input">/change_election.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'choose_past_elections' action calls 'execute' in 'ChoosePastElectionsAction' -->
         <action name="choosePastElections" class="action.ChoosePastElectionsAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/choose_past_elections.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'details_of_past_elections' action calls 'execute' in 'DetailsOfPastElectionsAction' -->
         <action name="detailsOfPastElections" class="action.DetailsOfPastElectionsAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/details_of_past_elections.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <!-- 'login' action calls 'execute' in 'LoginAction' -->
@@ -183,11 +195,13 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         <action name="chooseUser" class="action.ChooseUserAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/choose_user.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
         <action name="listPlacesUserVoted" class="action.ListPlacesUserVotedAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/places_user_voted.jsp</result>
+            <result name="login">/loginAdmin.jsp</result>
         </action>
 
     </package>

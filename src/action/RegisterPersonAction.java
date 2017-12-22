@@ -41,6 +41,10 @@ public class RegisterPersonAction extends ActionSupport implements SessionAware 
 
   @Override
   public String execute() {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     if (fieldsNotNull()) {
       try {
         int pass = 1;

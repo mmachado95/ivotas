@@ -40,6 +40,10 @@ public class CreateElectionStudentsAction extends ActionSupport implements Sessi
 
   @Override
   public String execute() throws ParseException {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     if (fieldsNotNull()) {
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 

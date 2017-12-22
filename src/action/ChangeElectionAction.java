@@ -43,6 +43,10 @@ public class ChangeElectionAction extends ActionSupport implements SessionAware 
 
   @Override
   public String execute() throws ParseException {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     if (session.get("electionName") != null) {
       electionObject = this.getIVotasBean().getElectionByName((String) session.get("electionName"));
     } else {

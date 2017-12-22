@@ -16,6 +16,9 @@ public class AdminAction extends ActionSupport implements SessionAware {
   public String execute() {
     //this.setElection(this.getIVotasBean().getElectionByName(electionName));
     //System.out.println(election);
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
 
     return SUCCESS;
   }

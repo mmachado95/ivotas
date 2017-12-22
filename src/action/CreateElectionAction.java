@@ -39,12 +39,10 @@ public class CreateElectionAction extends ActionSupport implements SessionAware 
 
   @Override
   public String execute() throws ParseException {
-    /*
-    System.out.println(name);
-    System.out.println(description);
-    System.out.println(startDate);
-    System.out.println(endDate);
-    System.out.println(type); */
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     if (fieldsNotNull()) {
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 

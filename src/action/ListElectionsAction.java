@@ -14,6 +14,10 @@ public class ListElectionsAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     elections = this.getIVotasBean().listElections();
     return SUCCESS;
   }

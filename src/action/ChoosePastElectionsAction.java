@@ -14,6 +14,10 @@ public class ChoosePastElectionsAction extends ActionSupport implements SessionA
 
   @Override
   public String execute() {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     elections = this.getIVotasBean().choosePastElections();
     return SUCCESS;
   }

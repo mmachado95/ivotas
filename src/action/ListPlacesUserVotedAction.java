@@ -17,6 +17,10 @@ public class ListPlacesUserVotedAction extends ActionSupport implements SessionA
 
   @Override
   public String execute() {
+    if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
+      return LOGIN;
+    }
+
     User user = this.getIVotasBean().getUserByName(username);
     votes = this.getIVotasBean().getVotesOfUser(user);
     return SUCCESS;
