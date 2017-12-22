@@ -22,8 +22,8 @@ public class ElectionAction extends ActionSupport implements SessionAware {
     if (session.get("username") == null || session.get("password") == null || session.get("loggedin") == null) {
       return INPUT;
     }
-    this.setElection(this.getIVotasBean().getElectionByName(electionName));
-    System.out.println(election.getCandidateLists());
+    election = this.getIVotasBean().getElectionByName(electionName);
+    this.setElection(election);
 
     return SUCCESS;
   }

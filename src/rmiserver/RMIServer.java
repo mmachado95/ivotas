@@ -633,10 +633,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     ArrayList<User> users = this.users;
 
     for (User user : users) {
-      System.out.println("::::::");
-      System.out.println(user.getName());
-      System.out.println(user.isAdmin());
-      System.out.println("::::::");
       if (name.equals(user.getName()) && password.equals(user.getPassword()) && user.isAdmin()) {
         return true;
       }
