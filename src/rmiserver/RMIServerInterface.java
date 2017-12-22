@@ -5,6 +5,7 @@ package rmiserver;
 
 import Admin.AdminInterface;
 import Data.*;
+import ws.WebSocketInterface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -125,8 +126,9 @@ public interface RMIServerInterface extends Remote {
    * false otherwise. */
   boolean authenticateUser(String name, String password) throws RemoteException;
 
-  boolean authenticateAdmin(String name, String password) throws RemoteException;
+  void logout(String name) throws RemoteException;
 
+  boolean authenticateAdmin(String name, String password) throws RemoteException;
 
   /** Giver a user, election, candidate list and department, votes */
   void vote(User user, Election election, CandidateList candidateList, Department department) throws RemoteException;
@@ -145,6 +147,12 @@ public interface RMIServerInterface extends Remote {
   void unsubscribe(AdminInterface c) throws RemoteException;
 
   void notifyAdmins(String s) throws RemoteException;
+
+  void subscribeWeb(WebSocketInterface c) throws RemoteException;
+
+  void unsubscribeWeb(WebSocketInterface c) throws RemoteException;
+
+  void notifyAdminsWeb(String s) throws RemoteException;
 
   /** Test */
   void test() throws RemoteException;

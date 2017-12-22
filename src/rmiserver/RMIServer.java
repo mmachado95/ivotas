@@ -5,9 +5,10 @@ package rmiserver;
 
 import Admin.AdminInterface;
 import Data.*;
+import ws.WebSocketAnnotation;
+import ws.WebSocketInterface;
 
 import java.io.IOException;
-import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
+
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
 	private static final long serialVersionUID = 20141107L;
@@ -31,6 +32,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 	private ArrayList<VotingTable> votingTables;
 	private ArrayList<Vote> votes;
   private ArrayList<AdminInterface> admins;
+  private ArrayList<WebSocketInterface> adminsWeb;
+
 
   public RMIServer() throws RemoteException {
 		super();
@@ -46,6 +49,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 			votingTables = data.votingTables;
 			votes = data.votes;
 			admins = new ArrayList<>();
+      adminsWeb = new ArrayList<>();
     } catch (ClassNotFoundException e) {
 			System.out.println("Class Not Found Exception " + e);
 		} catch (java.io.IOException e) {
@@ -622,11 +626,16 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     for (User user : users) {
       if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+        notifyAdminsWeb("User " + user.getName() + " logged in");
         return true;
       }
     }
 
     return false;
+  }
+
+  public void logout(String name) throws RemoteException {
+    notifyAdminsWeb("User " + name + " logged out");
   }
 
   public boolean authenticateAdmin(String name, String password) throws RemoteException {
@@ -663,7 +672,12 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
       }
     }
 
-    notifyAdmins("New vote on election " + election.getName() +
+    notifyAdminsWeb("_Nome " + user.getName() + "\nTipo" + user.getType() + "\nMesa De Voto");
+
+
+    notifyAdmins("MESA DE VOTO: New vote on election " + election.getName() +
+            ". \nCurrent number of votes " + numberOfVotes);
+    notifyAdminsWeb("MESA DE VOTO: New vote on election " + election.getName() +
             ". \nCurrent number of votes " + numberOfVotes);
   }
 
@@ -710,6 +724,20 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     this.votes.add(vote);
+
+    int numberOfVotes = 0;
+    for (int i = 0; i < this.votes.size(); i++) {
+      if (votes.get(i).getElection().getName().equals(election.getName())) {
+        numberOfVotes += 1;
+      }
+    }
+
+    notifyAdminsWeb("_Nome " + user.getName() + "\nTipo" + user.getType() + "\nWeb");
+
+    notifyAdmins("WEB: New vote on election " + election.getName() +
+            ". \nCurrent number of votes " + numberOfVotes);
+    notifyAdminsWeb("WEB: New vote on election " + election.getName() +
+            ". \nCurrent number of votes " + numberOfVotes);
     updateFile(this.votes, "Votes");
   }
 
@@ -773,10 +801,28 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     this.admins.remove(c);
   }
 
+  public synchronized void subscribeWeb(WebSocketInterface c) throws RemoteException {
+    System.out.println("Subscribing new admin web");
+    this.adminsWeb.add(c);
+  }
+
+  public synchronized void unsubscribeWeb(WebSocketInterface c) throws RemoteException {
+    System.out.println("Unsubscribed admin web");
+    this.adminsWeb.remove(c);
+  }
+
   public synchronized void notifyAdmins(String s) throws RemoteException {
     for (int i = 0; i < this.admins.size(); i++) {
       System.out.println("Sending print to admin.");
       this.admins.get(i).print_on_client(s);
+    }
+  }
+
+  public synchronized void notifyAdminsWeb(String s) throws RemoteException {
+    System.out.println(adminsWeb.size());
+    for (int i = 0; i < this.adminsWeb.size(); i++) {
+      System.out.println("Sending print to admin web.");
+      this.adminsWeb.get(i).print_on_client(s);
     }
   }
 

@@ -1,24 +1,58 @@
 package action;
 
 import Data.Election;
+import Data.User;
+import Data.Vote;
+
 import com.opensymphony.xwork2.ActionSupport;
-import model.IVotasBean;
 import org.apache.struts2.interceptor.SessionAware;
+import model.IVotasBean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ListElectionsAction extends ActionSupport implements SessionAware {
   private Map<String, Object> session;
-  private ArrayList<Election> elections;
+  private Election electionObject;
+  private String election;
+  private ArrayList <Map<String, Object>> details;
+
 
   @Override
   public String execute() {
     if (session.get("adminUsername") == null || session.get("adminPassword") == null || session.get("adminLoggedin") == null) {
       return LOGIN;
     }
+    setElectionObject(this.getIVotasBean().getElectionByName(election));
 
-    elections = this.getIVotasBean().listElections();
+    details = new ArrayList<>();
+
+
+    ArrayList<User> users = this.getIVotasBean().getAllUsers();
+
+    for (int i = 0; i < users.size(); i++) {
+      ArrayList<Vote> votes = this.getIVotasBean().getVotesOfUser(users.get(i));
+
+      for (int j = 0; j < votes.size(); j++) {
+        if (votes.get(j).getElection().getName().equals(electionObject.getName())) {
+          Map<String, Object> info = new HashMap<>();
+
+          info.put("name", users.get(i).getName());
+
+          info.put("type", users.get(i).getType());
+
+          if (votes.get(j).getDepartment() == null)
+            info.put("place", "web");
+          else
+            info.put("place", "mesa de voto");
+          details.add(info);
+        }
+      }
+    }
+
+    setDetails(details);
+
     return SUCCESS;
   }
 
@@ -38,11 +72,28 @@ public class ListElectionsAction extends ActionSupport implements SessionAware {
     this.session = session;
   }
 
-  public ArrayList<Election> getElections() {
-    return elections;
+
+  public void setElection(String election) {
+    this.election = election;
   }
 
-  public void setElections(ArrayList<Election> elections) {
-    this.elections = elections;
+  public String getElection() {
+    return election;
+  }
+
+  public Election getElectionObject() {
+    return electionObject;
+  }
+
+  public void setElectionObject(Election electionObject) {
+    this.electionObject = electionObject;
+  }
+
+  public ArrayList<Map<String, Object>> getDetails() {
+    return details;
+  }
+
+  public void setDetails(ArrayList<Map<String, Object>> details) {
+    this.details = details;
   }
 }

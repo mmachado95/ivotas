@@ -3,8 +3,10 @@
  */
 package model;
 
+import Admin.AdminInterface;
 import Data.*;
 import rmiserver.RMIServerInterface;
+import ws.WebSocketInterface;
 
 import java.io.*;
 import java.rmi.NotBoundException;
@@ -252,6 +254,16 @@ public class IVotasBean {
     return authUser;
   }
 
+
+  public void logout(String name) {
+    try {
+      rmiServer.logout(name);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+  }
+
   public boolean authenticateAdmin() {
     boolean authUser = false;
 
@@ -345,6 +357,7 @@ public class IVotasBean {
 
     return votes;
   }
+
 	
 	public void setUsername(String username) {
 		this.username = username;

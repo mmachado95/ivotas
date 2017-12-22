@@ -1,32 +1,48 @@
 package ws;
 
+import rmiserver.RMIServerInterface;
+
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 @ServerEndpoint(value = "/ws")
-public class WebSocketAnnotation {
+public class WebSocketAnnotation implements WebSocketInterface, Serializable {
+  private RMIServerInterface rmi;
   private Session session;
   private static final CopyOnWriteArrayList<Session> sessions = new CopyOnWriteArrayList<>();
-
-  public WebSocketAnnotation() { }
+  private WebSocketHelper aux;
 
   @OnOpen
   public void start(Session session) {
     this.session = session;
     sessions.add(session);
+
+    try {
+      this.rmi = (RMIServerInterface) LocateRegistry.getRegistry("localhost", 8000).lookup("ivotas");
+      aux = new WebSocketHelper(this);
+      this.rmi.subscribeWeb(aux);
+
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    } catch (NotBoundException e) {
+      e.printStackTrace();
+    }
   }
 
   @OnClose
   public void end() {
     try {
       this.session.close();
+      this.rmi.unsubscribeWeb(aux);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -52,16 +68,21 @@ public class WebSocketAnnotation {
   }
 
   private void sendMessage(String text) {
+    System.out.println("oi");
+    System.out.println(text);
     // uses *this* object's session to call sendText()
     try {
+      System.out.println(sessions.size());
       for (Session session : sessions) {
         session.getBasicRemote().sendText(text);
       }
     } catch (IOException e) {
+      System.out.println(e);
       // clean up once the WebSocket connection is closed
       try {
         for (Session session : sessions) {
           this.session.close();
+          this.rmi.unsubscribeWeb(aux);
         }
       } catch (IOException e1) {
         e1.printStackTrace();
@@ -80,6 +101,37 @@ public class WebSocketAnnotation {
     messageValues.put("password", cleanMessage[2]);
 
     return messageValues;
+  }
+
+  public void print_on_client(String s) throws RemoteException {
+    try {
+      session.getBasicRemote().sendText(s);
+    } catch (IOException e) {
+      System.out.println(e);
+      // clean up once the WebSocket connection is closed
+      try {
+        this.session.close();
+        this.rmi.unsubscribeWeb(aux);
+      } catch (IOException e1) {
+        e1.printStackTrace();
+      }
+    }
+  }
+
+  public RMIServerInterface getRmi() {
+    return rmi;
+  }
+
+  public void setRmi(RMIServerInterface rmi) {
+    this.rmi = rmi;
+  }
+
+  public Session getSession() {
+    return session;
+  }
+
+  public void setSession(Session session) {
+    this.session = session;
   }
 }
 

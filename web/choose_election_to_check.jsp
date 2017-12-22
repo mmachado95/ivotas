@@ -6,6 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <title>iVotas</title>
 </head>
@@ -17,30 +18,22 @@
     <h4 class="text-center">Escolher Eleição</h4>
 </div>
 
-<div class="container" style="margin-top: 5%">
-
-    <c:forEach items="${session.iVotasBean.getAllElections()}" var="value">
-        <s:url action="election" var="electionTag">
-            <s:param name="electionName"> <c:out value="${value}" /> </s:param>
+<div class="container" style="margin: 5%">
+    <c:forEach items="${elections}" var="value">
+        <s:url action="listElections" var="electionTag">
+            <s:param name="election"> <c:out value="${value.name}" /> </s:param>
         </s:url>
 
         <a href="<s:property value="#electionTag" />">
-            <button class="btn btn-primary"><c:out value="${value}" /></button>
+            <button class="btn btn-primary"><c:out value="${value.name}" /> -> <c:out value="${value.description}" /></button>
         </a>
         <br><br>
     </c:forEach>
-
 </div>
 
-<s:if test="hasActionErrors()">
-    <s:actionerror/>
-</s:if>
-<s:if test="hasActionMessages()">
-    <s:actionmessage/>
-</s:if>
+<div class="col-md-2 text-center" style="margin-top:3%">
+    <a href="<s:url action="admin" />" class="text-center"><button type="button" class="btn btn-secondary" style="margin-left: 2%">Voltar</button></a>
+</div>
 
-<a href="https://www.facebook.com/v2.2/dialog/oauth?client_id=1486604264709457&redirect_uri=http://127.0.0.1:8080/connectFacebook&scope=publish_actions"><button type="button" class="btn btn-secondary" style="margin-left: 2%">Connect Facebook</button></a>
-<br><br>
-<a href="<s:url action="logout" />" id="logout-button"><button class="btn btn-secondary" style="margin-left: 2%">Logout</button></a>
 </body>
-</html></html>
+</html>
