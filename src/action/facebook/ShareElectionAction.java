@@ -19,6 +19,11 @@ public class ShareElectionAction extends ActionSupport implements SessionAware {
     String username = (String) session.get("username");
     User user = this.getIVotasBean().getUserByName(username);
 
+    if (user.getFacebookAccessToken() == null || user.getFacebookID() == null) {
+      addActionError("A tua conta não está associada ao Facebook");
+      return ERROR;
+    }
+
     // Class to call share method
     Post post = new Post();
 

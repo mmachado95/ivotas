@@ -30,6 +30,10 @@ public class ConnectAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
+    if (session.get("username") == null || session.get("password") == null || session.get("loggedin") == null) {
+      return INPUT;
+    }
+
     // Build service to send request to Facebook
     final OAuth20Service service = new ServiceBuilder(clientId)
             .apiSecret(clientSecret)
