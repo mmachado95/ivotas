@@ -126,8 +126,9 @@ public interface RMIServerInterface extends Remote {
    * false otherwise. */
   boolean authenticateUser(String name, String password) throws RemoteException;
 
-  boolean authenticateAdmin(String name, String password) throws RemoteException;
+  void logout(String name) throws RemoteException;
 
+  boolean authenticateAdmin(String name, String password) throws RemoteException;
 
   /** Giver a user, election, candidate list and department, votes */
   void vote(User user, Election election, CandidateList candidateList, Department department) throws RemoteException;

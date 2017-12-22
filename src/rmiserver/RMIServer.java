@@ -626,11 +626,16 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     for (User user : users) {
       if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+        notifyAdminsWeb("User " + user.getName() + " logged in");
         return true;
       }
     }
 
     return false;
+  }
+
+  public void logout(String name) throws RemoteException {
+    notifyAdminsWeb("User " + name + " logged out");
   }
 
   public boolean authenticateAdmin(String name, String password) throws RemoteException {

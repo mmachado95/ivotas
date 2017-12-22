@@ -8,46 +8,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <title>iVotas</title>
-
-    <script type="text/javascript">
-        var websocket = null;
-
-        window.onload = function() { // URI = ws://10.16.0.165:8080/WebSocket/ws
-            connect('ws://' + window.location.host + '/ws');
-            console.log(window.location.host);
-        };
-
-        function connect(host) { // connect to the host websocket
-            if ('WebSocket' in window)
-                websocket = new WebSocket(host);
-            else if ('MozWebSocket' in window)
-                websocket = new MozWebSocket(host);
-            else {
-                writeToHistory('Get a real browser which supports WebSocket.');
-                return;
-            }
-
-            websocket.onopen    = onOpen; // set the event listeners below
-            websocket.onclose   = onClose;
-
-            document.getElementById("logout-button").addEventListener("click", function() {
-                websocket.send("logout:"+"<c:out value="${session.username}" />"+"-"+"<c:out value="${session.password}" />");
-
-            });
-        }
-
-        function onOpen(event) {
-            <c:if test="${session.firstTime}">
-            console.log("passed")
-            websocket.send("login:"+"<c:out value="${session.username}" />"+"-"+"<c:out value="${session.password}" />");
-            <c:remove var="firstTime" scope="session" />
-            </c:if>
-        }
-
-        function onClose(event) {
-            websocket.send('WebSocket closed.');
-        }
-    </script>
 </head>
 <body>
 

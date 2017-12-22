@@ -254,6 +254,16 @@ public class IVotasBean {
     return authUser;
   }
 
+
+  public void logout(String name) {
+    try {
+      rmiServer.logout(name);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+  }
+
   public boolean authenticateAdmin() {
     boolean authUser = false;
 
