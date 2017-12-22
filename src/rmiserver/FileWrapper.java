@@ -45,64 +45,62 @@ public class FileWrapper {
     // -------------UTILIZADORES----------------
     // 10 eleitores FCTUC
     User user1= new User("Teresa", "123", department1, faculty1, "9140975123", "Rua A", "11111111",
-            "01/18", 1, false);
+            "01/18", 1 );
     User user2= new User("Miguel Machado", "123", department1, faculty1, "91409751234", "Rua B", "11111112",
-            "02/18", 1, false);
+            "02/18", 1 );
     User user3= new User("Pedro", "123", department1, faculty1, "9140975125", "Rua C", "11111113",
-            "03/18", 1, false);
+            "03/18", 1 );
     User user4= new User("Maria", "123", department1, faculty1, "9140975126", "Rua D", "11111114",
-            "04/18", 1, false);
+            "04/18", 1 );
     User user5= new User("Paula", "123", department1, faculty1, "9140975127", "Rua E", "11111115",
-            "05/18", 1, false);
+            "05/18", 1 );
     User user6= new User("Joao", "123", department1, faculty1, "9140975128", "Rua F", "11111116",
-            "06/18", 2, false);
+            "06/18", 2 );
     User user7= new User("Guilherme", "123", department2, faculty1, "9140975129", "Rua G", "11111117",
-            "07/18", 1, false);
+            "07/18", 1 );
     User user8= new User("Nuno", "123", department2, faculty1, "9140975130", "Rua H", "11111118",
-            "08/18", 2, false);
+            "08/18", 2 );
     User user9= new User("Machado", "123", department2, faculty1, "9140975131", "Rua I", "11111119",
-            "09/18", 3, false);
+            "09/18", 3 );
     User user10= new User("Rafael", "123", department2, faculty1, "9140975132", "Rua J", "22222221",
-            "10/18", 3, false);
+            "10/18", 3 );
     // 10 eleitores FEUC
     User user11= new User("Rafaela", "123", department3, faculty2, "9140975133", "Rua K", "22222222",
-            "11/18", 1, false);
+            "11/18", 1 );
     User user12= new User("Diogo", "123", department3, faculty2, "9140975134", "Rua L", "22222223",
-            "12/18", 1, false);
+            "12/18", 1 );
     User user13= new User("Andre", "123", department3, faculty2, "9140975135", "Rua M", "22222224",
-            "01/19", 2, false);
+            "01/19", 2 );
     User user14= new User("Ana", "123", department3, faculty2, "9140975136", "Rua N", "22222225",
-            "02/19", 2, false);
+            "02/19", 2 );
     User user15= new User("Ines", "123", department3, faculty2, "9140975137", "Rua O", "22222226",
-            "03/19", 3, false);
+            "03/19", 3 );
     User user16= new User("David", "123", department4, faculty2, "9140975138", "Rua P", "22222227",
-            "04/19", 3, false);
+            "04/19", 3 );
     User user17= new User("Francisco", "123", department4, faculty2, "9140975139", "Rua Q", "22222228",
-            "05/19", 1, false);
+            "05/19", 1 );
     User user18= new User("Vanessa", "123", department4, faculty2, "9140975140", "Rua R", "22222229",
-            "06/19", 2, false);
+            "06/19", 2 );
     User user19= new User("Henrique", "123", department4, faculty2, "9140975141", "Rua S", "22222210",
-            "07/19", 3, false);
+            "07/19", 3 );
     User user20= new User("Mario", "123", department4, faculty2, "9140975142", "Rua V", "22222212",
-            "08/19", 1, false);
+            "08/19", 1 );
     User user21= new User("Cesar", "123", department1, faculty1, "9140975143", "Rua A", "22222212",
-            "01/18", 1, false);
+            "01/18", 1 );
     User user22= new User("Napoleao", "123", department1, faculty1, "91409751244", "Rua B", "22222213",
-            "02/18", 1, false);
+            "02/18", 1 );
     User user23= new User("Winston", "123", department1, faculty1, "9140975145", "Rua C", "22222214",
-            "03/18", 1, false);
+            "03/18", 1 );
     User user24= new User("Pablo", "123", department1, faculty1, "9140975146", "Rua D", "22222215",
-            "04/18", 1, false);
+            "04/18", 1 );
     User user25= new User("Jordi", "123", department1, faculty1, "9140975147", "Rua E", "22222216",
-            "05/18", 1, false);
+            "05/18", 1 );
     User user26= new User("Pique", "123", department1, faculty1, "9140975148", "Rua F", "22222217",
-            "06/18", 1, false);
+            "06/18", 1 );
     User user27= new User("Rosa", "123", department3, faculty2, "91409751123", "Rua K", "22222222",
-            "11/18", 1, false);
+            "11/18", 1 );
     User user28= new User("Alba", "123", department3, faculty2, "9140975312", "Rua L", "22222223",
-            "12/18", 1, false);
-    User user29 = new User("admin", "admin", department1, faculty1, "1240975123", "Rua ADMIN", "91283746",
-            "01/18", 1, true);
+            "12/18", 1 );
 
     ArrayList<User> users = new ArrayList<User>();
     users.add(user1);
@@ -125,16 +123,6 @@ public class FileWrapper {
     users.add(user18);
     users.add(user19);
     users.add(user20);
-    users.add(user21);
-    users.add(user22);
-    users.add(user23);
-    users.add(user24);
-    users.add(user25);
-    users.add(user26);
-    users.add(user27);
-    users.add(user28);
-    users.add(user29);
-
 
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");

@@ -21,9 +21,6 @@ public class VoteAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
-    if (session.get("username") == null || session.get("password") == null || session.get("loggedin") == null) {
-      return INPUT;
-    }
     this.setElectionName(electionName);
     election = this.getIVotasBean().getElectionByName(electionName);
     candidateLists = election.getCandidateLists();
@@ -33,12 +30,7 @@ public class VoteAction extends ActionSupport implements SessionAware {
 
   public String createVote() {
     String username = (String) this.session.get("username");
-    CandidateList candidateList;
-    if (listName.equals("blank")) {
-      candidateList = null;
-    } else {
-      candidateList = this.getIVotasBean().getCandidateListByName(listName);
-    }
+    CandidateList candidateList = this.getIVotasBean().getCandidateListByName(listName);
     User user = this.getIVotasBean().getUserByName(username);
     Election election = this.getIVotasBean().getElectionByName(electionName);
 

@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 public class LoginAction extends ActionSupport implements SessionAware {
-	private static final long serialVersionUID = 46666L;
+	private static final long serialVersionUID = 4L;
 	private Map<String, Object> session;
 	private String username = null, password = null;
 

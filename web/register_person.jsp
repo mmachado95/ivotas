@@ -36,8 +36,6 @@
         <s:textfield name="expireDate" /><br>
         <s:text name="Type:" />
         <s:textfield name="type" /><br>
-        <s:text name="Admin(true or false):" />
-        <s:textfield name="isAdmin" /><br>
         <s:submit />
     </s:form>
 </body>

@@ -17,12 +17,6 @@
     <p><a href="<s:property value="#voteTag" />&electionName=${electionName}" ><c:out value="${candidateList.name}" /></a></p><br>
 </c:forEach>
 
-<s:url action="createVote" var="voteTag" >
-    <s:param name="listName"><c:out value="blank" /></s:param>
-</s:url>
-<p><a href="<s:property value="#voteTag" />&electionName=${electionName}" >Branco</a></p><br>
-
-
 <p><a href="<s:url action="index" />">Voltar</a></p><br>
 </body>
 </html>

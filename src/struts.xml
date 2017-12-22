@@ -43,14 +43,7 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
         </action>
 
         <!-- 'admin' action calls 'execute' in 'AdminAction' -->
-        <action name="admin" class="action.LoginAdminAction" method="execute">
-            <interceptor-ref name="defaultStack" />
-            <result name="success">/admin.jsp</result>
-            <result name="login">/loginAdmin.jsp</result>
-        </action>
-
-        <!-- 'admin' action calls 'execute' in 'AdminAction' -->
-        <action name="loggedAdmin" class="action.AdminAction" method="execute">
+        <action name="admin" class="action.AdminAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/admin.jsp</result>
         </action>
@@ -152,12 +145,6 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="error">/WEB-INF/index.jsp</result>
         </action>
 
-        <action name="logoutAdmin" class="action.LogoutAdminAction" method="execute">
-            <interceptor-ref name="defaultStack" />
-            <result name="success">/login.jsp</result>
-            <result name="error">/admin.jsp</result>
-        </action>
-
         <!-- 'election' action calls 'execute' in 'Election Auction' -->
         <action name="election" class="action.ElectionAction" method="execute">
             <interceptor-ref name="defaultStack" />
@@ -177,7 +164,6 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
 
         <action name="shareElection" class="action.facebook.ShareElectionAction" method="execute">
             <result name="success">/WEB-INF/index.jsp</result>
-            <result name="error">/WEB-INF/index.jsp</result>
         </action>
 
         <action name="chooseUser" class="action.ChooseUserAction" method="execute">
