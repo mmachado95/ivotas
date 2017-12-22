@@ -58,8 +58,13 @@ public class TCPServer {
       votingTable = rmi.getVotingTableById(VotingTableID);
       tableServer.setVotingTable(votingTable);
       rmi.notifyAdmins("New voting table with id " + votingTable.getId() + " of election " + votingTable.getElection().getName());
+      rmi.notifyAdminsWeb("New voting table with id " + votingTable.getId() + " of election " + votingTable.getElection().getName());
     } catch (IOException | NullPointerException e) {
+      System.out.println("====");
+      System.out.println(votingTable);
+      System.out.println("====");
       System.out.println("Unable to retrieve voting table");
+      e.printStackTrace();
       tableServer.connectRMIInterface(IPAddress);
       return;
     }
@@ -559,6 +564,7 @@ class Menu extends Thread {
         case 8:
           try {
             rmi.notifyAdmins("Voting table with id " + votingTableId + " off");
+            rmi.notifyAdminsWeb("Voting table with id " + votingTableId + " off");
           }
           catch (RemoteException e) {
             System.out.println("Remote exception notifying admins of voting table off.");

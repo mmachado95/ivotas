@@ -5,6 +5,7 @@ package rmiserver;
 
 import Admin.AdminInterface;
 import Data.*;
+import ws.WebSocketInterface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -145,6 +146,12 @@ public interface RMIServerInterface extends Remote {
   void unsubscribe(AdminInterface c) throws RemoteException;
 
   void notifyAdmins(String s) throws RemoteException;
+
+  void subscribeWeb(WebSocketInterface c) throws RemoteException;
+
+  void unsubscribeWeb(WebSocketInterface c) throws RemoteException;
+
+  void notifyAdminsWeb(String s) throws RemoteException;
 
   /** Test */
   void test() throws RemoteException;

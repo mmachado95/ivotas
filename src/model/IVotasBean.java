@@ -3,8 +3,10 @@
  */
 package model;
 
+import Admin.AdminInterface;
 import Data.*;
 import rmiserver.RMIServerInterface;
+import ws.WebSocketInterface;
 
 import java.io.*;
 import java.rmi.NotBoundException;
@@ -345,6 +347,7 @@ public class IVotasBean {
 
     return votes;
   }
+
 	
 	public void setUsername(String username) {
 		this.username = username;
