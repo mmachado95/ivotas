@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Hey!</title>s
+    <title>iVotas</title>
 
     <script type="text/javascript">
         var websocket = null;

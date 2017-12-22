@@ -14,10 +14,11 @@ public class User implements Serializable {
   private int type;
   private String facebookID;
   private String facebookAccessToken;
+  private boolean isAdmin;
 
   public User() {}
 
-  public User(String name, String password, Department department, Faculty faculty, String contact, String address, String cc, String expireDate, int type) {
+  public User(String name, String password, Department department, Faculty faculty, String contact, String address, String cc, String expireDate, int type, boolean isAdmin) {
     this.name = name;
     this.password = password;
     this.department = department;
@@ -29,6 +30,7 @@ public class User implements Serializable {
     this.type = type;
     this.facebookID = null;
     this.facebookAccessToken = null;
+    this.isAdmin = isAdmin;
   }
 
   public String getName() { return name; }
@@ -70,6 +72,13 @@ public class User implements Serializable {
   }
   public void setFacebookAccessToken(String facebookAccessToken) {
     this.facebookAccessToken = facebookAccessToken;
+  }
+
+  public boolean isAdmin() {
+    return isAdmin;
+  }
+  public void setAdmin(boolean admin) {
+    isAdmin = admin;
   }
 
   public String prettyPrint() {

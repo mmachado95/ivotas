@@ -73,7 +73,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
   }
 
 
-  public synchronized int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) throws RemoteException {
+  public synchronized int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type, boolean isAdmin) throws RemoteException {
     Department department = getDepartmentByName(departmentName);
     if (department == null) {
       return 2;
@@ -84,7 +84,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
       return 3;
     }
 
-    User user = new User(name, password, department, faculty, contact, address, cc, expireDate, type);
+    User user = new User(name, password, department, faculty, contact, address, cc, expireDate, type, isAdmin);
 
     this.users.add(user);
     updateFile(this.users, "Users");
@@ -622,6 +622,22 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     for (User user : users) {
       if (name.equals(user.getName()) && password.equals(user.getPassword())) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public boolean authenticateAdmin(String name, String password) throws RemoteException {
+    ArrayList<User> users = this.users;
+
+    for (User user : users) {
+      System.out.println("::::::");
+      System.out.println(user.getName());
+      System.out.println(user.isAdmin());
+      System.out.println("::::::");
+      if (name.equals(user.getName()) && password.equals(user.getPassword()) && user.isAdmin()) {
         return true;
       }
     }

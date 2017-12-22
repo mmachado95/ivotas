@@ -16,7 +16,7 @@ public interface RMIServerInterface extends Remote {
   void remote_print(String s) throws RemoteException;
 
   /** Creates a user. Checks if department and faculties with departmentName and facultyName exist. */
-  int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) throws RemoteException;
+  int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type, boolean isAdmin) throws RemoteException;
 
   /** Creates faculty given the faculty name */
   void createFaculty(String name) throws RemoteException;
@@ -124,6 +124,9 @@ public interface RMIServerInterface extends Remote {
   /** Given a name and password authenticates user. Return true if operation is successful and
    * false otherwise. */
   boolean authenticateUser(String name, String password) throws RemoteException;
+
+  boolean authenticateAdmin(String name, String password) throws RemoteException;
+
 
   /** Giver a user, election, candidate list and department, votes */
   void vote(User user, Election election, CandidateList candidateList, Department department) throws RemoteException;

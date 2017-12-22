@@ -77,11 +77,11 @@ public class IVotasBean {
     return rmi;
   }
 
-  public int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type) {
+  public int createUser(String name, String password, String departmentName, String facultyName, String contact, String address, String cc, String expireDate, int type, boolean isAdmin) {
     int createUser = 0;
 
     try {
-      createUser = rmiServer.createUser(name, password, departmentName, facultyName, contact, address, cc, expireDate, type);
+      createUser = rmiServer.createUser(name, password, departmentName, facultyName, contact, address, cc, expireDate, type, isAdmin);
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
     }
@@ -245,6 +245,18 @@ public class IVotasBean {
 
     try {
       authUser = rmiServer.authenticateUser(this.username, this.password);
+    } catch (RemoteException e) {
+      this.rmiServer = this.connectRMIInterface();
+    }
+
+    return authUser;
+  }
+
+  public boolean authenticateAdmin() {
+    boolean authUser = false;
+
+    try {
+      authUser = rmiServer.authenticateAdmin(this.username, this.password);
     } catch (RemoteException e) {
       this.rmiServer = this.connectRMIInterface();
     }
