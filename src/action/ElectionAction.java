@@ -19,9 +19,6 @@ public class ElectionAction extends ActionSupport implements SessionAware {
 
   @Override
   public String execute() {
-    if (session.get("username") == null || session.get("password") == null || session.get("loggedin") == null) {
-      return INPUT;
-    }
     this.setElection(this.getIVotasBean().getElectionByName(electionName));
     System.out.println(election.getCandidateLists());
 

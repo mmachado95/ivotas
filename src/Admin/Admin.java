@@ -127,10 +127,9 @@ public class Admin extends UnicastRemoteObject implements AdminInterface, Serial
     String address = getValidString("Address: ");
     String cc = Integer.toString(getValidInteger("CC: ", 0, 999999999));
     String expireDate = getValidExpireDate("Expire date: ");
-    String isAdmin = getValidBoolean();
 
     try {
-      int success = r.createUser(name, password, departmentName, facultyName, contact, address, cc, expireDate, type, Boolean.parseBoolean(isAdmin));
+      int success = r.createUser(name, password, departmentName, facultyName, contact, address, cc, expireDate, type);
       if (success == 1)
         System.out.println("User successfully created");
       else if (success == 2)
@@ -615,19 +614,6 @@ public class Admin extends UnicastRemoteObject implements AdminInterface, Serial
         return res;
       else
         System.out.println("Please write expire date in MM/YY format");
-    }
-  }
-
-  public static String getValidBoolean() {
-    Scanner sc = new Scanner(System.in);
-
-    while(true) {
-      String res = sc.nextLine();
-      if (res.equals("true") || res.equals("false")) {
-        return res;
-      } else {
-        System.out.println("Please write a boolean");
-      }
     }
   }
 

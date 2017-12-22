@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>iVotas!</title>
+    <title>Hey!</title>
 </head>
 <body>
 
@@ -16,12 +16,7 @@
         <p>${election.name}</p>
         <p>${election.description}</p>
         <p>${election.startDate}</p>
-        <c:if test="${election.type == 1}">
-            <p>Núcleo de Estudantes</p>
-        </c:if>
-        <c:if test="${election.type == 2}">
-            <p>Conselho Geral</p>
-        </c:if>
+        <p>${election.type}</p>
         <c:forEach items="${election.candidateLists}" var="candidateList">
             <p>${candidateList.name}</p>
         </c:forEach>
