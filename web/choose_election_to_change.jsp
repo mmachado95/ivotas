@@ -32,7 +32,7 @@
 </div>
 
 <div class="col-md-2 text-center" style="margin-top:3%">
-    <a href="<s:url action="admin" />" class="text-center"><button type="button" class="btn btn-secondary" style="margin-left: 2%">Voltar</button></a>
+    <a href="<s:url action="loggedAdmin" />" class="text-center"><button type="button" class="btn btn-secondary" style="margin-left: 2%">Voltar</button></a>
 </div>
 
 </body>

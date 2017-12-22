@@ -50,7 +50,7 @@ public class ListElectionsAction extends ActionSupport implements SessionAware {
         }
       }
     }
-    
+
     setDetails(details);
 
     return SUCCESS;
