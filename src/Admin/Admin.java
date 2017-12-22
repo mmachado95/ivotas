@@ -626,7 +626,7 @@ public class Admin extends UnicastRemoteObject implements AdminInterface, Serial
       if (res.equals("true") || res.equals("false")) {
         return res;
       } else {
-        System.out.println("Please write expire date in MM/YY format");
+        System.out.println("Please write a boolean");
       }
     }
   }
