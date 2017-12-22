@@ -21,6 +21,7 @@ public class RegisterPersonAction extends ActionSupport implements SessionAware 
   private String departmentName = null;
   private String facultyName = null;
   private String type = null;
+  private String isAdmin = null;
 
   private boolean fieldsNotNull() {
     if (username == null &&
@@ -30,7 +31,8 @@ public class RegisterPersonAction extends ActionSupport implements SessionAware 
             cc == null &&
             expireDate == null &&
             facultyName == null &&
-            type == null) {
+            type == null &&
+            isAdmin == null) {
       return false;
     }
 
@@ -74,10 +76,14 @@ public class RegisterPersonAction extends ActionSupport implements SessionAware 
           addActionError("Invalid type Field");
           pass = 0;
         }
+        if (!isAdmin.equals("true") && !isAdmin.equals("false")) {
+          addActionError("Invalid admin Field");
+          pass = 0;
+        }
         if (pass == 0) {
           return INPUT;
         }
-        int createUser = this.getIVotasBean().createUser(username, password, departmentName, facultyName, contact, address, cc, expireDate, Integer.parseInt(type));
+        int createUser = this.getIVotasBean().createUser(username, password, departmentName, facultyName, contact, address, cc, expireDate, Integer.parseInt(type), Boolean.parseBoolean(isAdmin));
         if (createUser == 1) {
           return SUCCESS;
         }

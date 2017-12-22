@@ -59,6 +59,7 @@
     <a href="<s:url action="chooseElectionToChange" />" >Alterar Propriedades de Eleição</a> <br><br>
     <a href="<s:url action="chooseUser" />">Saber em que local votou cada eleitor</a> <br><br>
     <a href="<s:url action="choosePastElections" />">Consultar Detalhes de Eleições Passadas</a> <br><br>
+    <a href="<s:url action="logoutAdmin" />">Sair</a> <br><br>
     <div id="users-online">
     </div>
 </body>
