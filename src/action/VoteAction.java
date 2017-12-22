@@ -30,7 +30,12 @@ public class VoteAction extends ActionSupport implements SessionAware {
 
   public String createVote() {
     String username = (String) this.session.get("username");
-    CandidateList candidateList = this.getIVotasBean().getCandidateListByName(listName);
+    CandidateList candidateList;
+    if (listName.equals("blank")) {
+      candidateList = null;
+    } else {
+      candidateList = this.getIVotasBean().getCandidateListByName(listName);
+    }
     User user = this.getIVotasBean().getUserByName(username);
     Election election = this.getIVotasBean().getElectionByName(electionName);
 
