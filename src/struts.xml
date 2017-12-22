@@ -103,7 +103,13 @@ and should reside on the classpath of the webapp (generally /WEB-INF/classes). -
             <result name="login">/loginAdmin.jsp</result>
         </action>
 
-        <!-- 'list_elections' action calls 'execute' in 'LisElectionsAction' -->
+        <!-- 'choose_election_to_check' action calls 'execute' in 'ChooseElectionToCheck' -->
+        <action name="chooseElectionToCheck" class="action.ChooseElectionToCheckAction" method="execute">
+            <interceptor-ref name="defaultStack" />
+            <result name="success">/choose_election_to_check.jsp</result>
+        </action>
+
+        <!-- 'list_elections' action calls 'execute' in 'ListElectionsAction' -->
         <action name="listElections" class="action.ListElectionsAction" method="execute">
             <interceptor-ref name="defaultStack" />
             <result name="success">/list_elections.jsp</result>

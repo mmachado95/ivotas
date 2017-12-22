@@ -672,6 +672,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
       }
     }
 
+    notifyAdminsWeb("_Nome " + user.getName() + "\nTipo" + user.getType() + "\nMesa De Voto");
+
+
     notifyAdmins("MESA DE VOTO: New vote on election " + election.getName() +
             ". \nCurrent number of votes " + numberOfVotes);
     notifyAdminsWeb("MESA DE VOTO: New vote on election " + election.getName() +
@@ -728,6 +731,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         numberOfVotes += 1;
       }
     }
+
+    notifyAdminsWeb("_Nome " + user.getName() + "\nTipo" + user.getType() + "\nWeb");
 
     notifyAdmins("WEB: New vote on election " + election.getName() +
             ". \nCurrent number of votes " + numberOfVotes);

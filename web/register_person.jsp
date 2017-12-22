@@ -17,27 +17,32 @@
     <h4 class="text-center">Registar Pessoa</h4>
 </div>
 
-<form action="registerPerson" method="post" style="margin: 5%">
-    <s:text name="Username:" />
-    <s:textfield name="username" /><br>
-    <s:text name="Password:" />
-    <s:textfield name="password" /><br>
-    <s:text name="Departmento:" />
-    <s:textfield name="departmentName" /><br>
-    <s:text name="Faculdade:" />
-    <s:textfield name="facultyName" /><br>
-    <s:text name="Contacto:" />
-    <s:textfield name="contact" /><br>
-    <s:text name="Morada:" />
-    <s:textfield name="address" /><br>
-    <s:text name="CC:" />
-    <s:textfield name="cc" /><br>
-    <s:text name="Data de Validade:" />
-    <s:textfield name="expireDate" /><br>
-    <s:text name="Tipo:" />
-    <s:textfield name="type" /><br>
-    <s:submit class="btn btn-primary" />
-</form>
+    <div class="row" style="margin: 5%">
+        <div class="container col-sm-6">
+        <form action="registerPerson" method="post" style="margin: 5%">
+            <s:text name="Username:" />
+            <s:textfield name="username" /><br>
+            <s:text name="Password:" />
+            <s:textfield name="password" /><br>
+            <s:text name="Departmento:" />
+            <s:textfield name="departmentName" /><br>
+            <s:text name="Faculdade:" />
+            <s:textfield name="facultyName" /><br>
+            <s:text name="Contacto:" />
+            <s:textfield name="contact" /><br>
+            <s:text name="Morada:" />
+            <s:textfield name="address" /><br>
+            <s:text name="CC:" />
+            <s:textfield name="cc" /><br>
+            <s:text name="Data de Validade:" />
+            <s:textfield name="expireDate" /><br>
+            <s:text name="Tipo:" />
+            <s:textfield name="type" /><br>
+            <s:submit class="btn btn-primary" />
+        </form>
+        </div>
+        <jsp:include page="web_sockets.jsp" />
+    </div>
 
 <s:if test="hasActionErrors()">
     <s:actionerror/>
